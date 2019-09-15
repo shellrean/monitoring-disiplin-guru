@@ -63,7 +63,7 @@ class Guru extends CI_Controller
 	 * @param integer $id
 	 * @return json
 	 */
-	public function show($id == null) 
+	public function show($id=null) 
 	{
 
 	}
@@ -77,17 +77,6 @@ class Guru extends CI_Controller
 	public function data()
 	{
 
-	}
-
-	
-
-
-
-
-
-
-
-
-	
+	}	
 
 }
