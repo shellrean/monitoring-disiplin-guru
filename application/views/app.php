@@ -8,7 +8,7 @@
     <meta name="description" content="Applikasi untuk memonitor sekolah">
     <meta name="author" content="Kuswandi">
     <link rel="shortcut icon" href="<?= base_url('public/img/logo-dki.png') ?>" type="image/x-icon">
-
+ 
     <title>UnName APP</title>
     <!-- Icons-->
     <link href="<?= base_url() ?>node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
     <script src="<?= base_url('public') ?>/vendors/toastr/toastr.min.js"></script>
     <script src="<?= base_url('public') ?>/js/app.js"></script>
 
-
+    <script src="<?= base_url('public') ?>/js/scripts.js"></script>
     <script>
       toastr.options = {
         "closeButton": false,
