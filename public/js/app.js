@@ -30,3 +30,6 @@ function hideLoading() {
 	})
 }
 
+function showLoading() {
+	$('#modal-proses').modal('show')
+}

@@ -98,4 +98,15 @@
     }
   }
 
+  /**
+   * Helper untuk mengambil seluruh data yang login
+   * @return object
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function user()
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('user',['username' => $CI->session->userdata('username')])->row();
+
+  }
   

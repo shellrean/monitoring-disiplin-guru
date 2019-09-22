@@ -16,7 +16,7 @@
               <th>Alamat Sekolah</th>
               <th>Aksi</th>
               <th></th>
-            </tr>
+            </tr> 
           </thead>
           <tbody>
           </tbody>
@@ -221,7 +221,6 @@
             hideLoading();
             $("#modal-tambah").modal('hide');
             notify_success(obj.pesan);
-            $
           } else {
             hideLoading();
             $("#form-pesan").html(pesan_err(obj.pesan));

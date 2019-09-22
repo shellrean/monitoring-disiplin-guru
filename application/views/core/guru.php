@@ -32,6 +32,36 @@
   </div>
 </div>
 
+<!-- Modal Tambah Data -->
+<div class="modal fade" id="modal-tambah" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="form-tambah" >
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tambah guru</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="form-pesan"></div>
+          <div class="form-group">
+            <label>NIP</label>
+            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP">
+          </div>
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" id="tambah-simpan" class="btn btn-success">Tambah</button>
+        </div>
+    </div>
+    </form>
+  </div>
+</div>
 
 <div class="modal fade" id="modal-hapus" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -58,6 +88,15 @@
 
 
 <script>
+  function tambah()
+  {
+    $('#form-pesan').html('')
+    $('#nip').val('')
+    $('#nama').val('')
+    
+    $('#modal-tambah').modal('show')
+  }
+
   $(function() {
     let table = $('#appTable').DataTable( {
       "ajax"  : '<?= base_url('guru/data'); ?>',
@@ -71,8 +110,14 @@
         },
         { "data"    : "nip" },
         { "data"    : "nama" },
-        { "data"    : "aksi","orderable": false },
-        { "data"    : "check","orderable": false }
+        { "data"    : "aksi",
+          "orderable": false,
+          "width"   : "50px",
+        },
+        { "data"    : "check",
+          "orderable": false,
+          "width"   : "10px", 
+        }
       ]
     });
 
@@ -84,4 +129,4 @@
     }).draw();   
   })
                                                                                              
-</script>
+</script> 

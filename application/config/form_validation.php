@@ -3,12 +3,12 @@
 $config['auth'] = [
 	[
 		'field' => 'username',
-		'label'	=> 'Username',
+		'label'	=> 'username',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'password',
-		'label'	=> 'Password',
+		'label'	=> 'password',
 		'rules' => 'required'
 	]
 ];
@@ -16,12 +16,12 @@ $config['auth'] = [
 $config['sekolah/tambah'] = [
 	[
 		'field' => 'nama_sekolah',
-		'label'	=> 'Nama sekolah',
+		'label'	=> 'nama sekolah',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'alamat_sekolah',
-		'label'	=> 'Alamat sekolah',
+		'label'	=> 'alamat sekolah',
 		'rules' => 'required'
 	]
 ];
@@ -29,28 +29,40 @@ $config['sekolah/tambah'] = [
 $config['user'] = [
 	[
 		'field' => 'sekolah_id',
-		'label'	=> 'ID Sekolah',
+		'label'	=> 'id sekolah',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'username',
-		'label'	=> 'User login',
+		'label'	=> 'user login',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'password',
-		'label'	=> 'Password login',
+		'label'	=> 'password login',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'name',
-		'label'	=> 'Nama',
+		'label'	=> 'nama',
 		'rules' => 'required'
 	],
 	[
 		'field' => 'is_active',
-		'label'	=> 'Status',
+		'label'	=> 'status',
 		'rules' => 'required'
 	],
 
+];
+
+$config['guru/tambah'] = [
+	[
+		'field'	=> 'nip',
+		'label'	=> 'nip',
+		'rules'	=> 'required'
+	],
+	[
+		'field'	=> 'nama',
+		'rules'	=> 'required'
+	]
 ];

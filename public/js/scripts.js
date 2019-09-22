@@ -25,13 +25,13 @@ $(function() {
 
 	$('#btn-hapus').click(function() {
 		$('#form-hapus').submit();
-	})
+	}) 
 
 	$('#form-hapus').submit(function(e) {
 		let base = $('#base_url').val();
 
 		e.preventDefault();
-		$('#modal-proses').modal('show');
+		showLoading()
 		$.ajax({
 			url: base+'/destroy',
 			type: 'POST',
@@ -49,6 +49,32 @@ $(function() {
 					hideLoading();
 					$('#modal-hapus').modal('hide');
 					notify_error(obj.pesan);
+				}
+			}
+		})
+	})
+
+	$('#form-tambah').submit(function(e){
+		e.preventDefault()
+		let base = $('#base_url').val()
+
+		showLoading()
+		$.ajax({
+			url: base+'/store',
+			type: 'POST',
+			data: $('#form-tambah').serialize(),
+			cache: false,
+			success(res) {
+				let obj = $.parseJSON(res)
+				if(obj.status == 1) {
+					refresh_table()
+					hideLoading();
+					$('#modal-tambah').modal('hide')
+					notify_success(obj.pesan)
+				}
+				else {
+					hideLoading()
+					$('#form-pesan').html(pesan_err(obj.pesan));
 				}
 			}
 		})

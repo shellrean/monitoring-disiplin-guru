@@ -49,7 +49,23 @@ class Guru extends CI_Controller
 	 */
 	public function store()
 	{
+		if($this->form_validation->run('guru/tambah')) {
+			$data = [
+				'id_sekolah'		=> user()->sekolah_id,
+				'nip'				=> $this->input->post('nip'),
+				'nama'				=> $this->input->post('nama'),
+			];
 
+			$this->Guru_model->save($data);
+			$respond['status'] 	= 1;
+			$respond['pesan']	= 'Data guru berhasil disimpan';
+		}
+		else {
+			$respond['status']	= 0;
+			$respond['pesan']	= validation_errors();
+		}
+
+		echo json_encode($respond);
 	}
 
 	/**
@@ -90,7 +106,7 @@ class Guru extends CI_Controller
 	 */
 	public function show($id=null) 
 	{
-
+ 
 	}
 
 	/**
