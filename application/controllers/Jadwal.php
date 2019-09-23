@@ -56,17 +56,28 @@ class Jadwal extends CI_Controller
 	public function store()
 	{
 		if($this->form_validation->run('jadwal/tambah')) {
-			$data = [
-				'sekolah_id'		=> user()->sekolah_id,
-				'hari_id'			=> $this->input->post('hari_id'),
-				'seling_id'			=> $this->input->post('seling_id'),
-				'kelas_id'			=> $this->input->post('kelas_id'),
-				'guru_id'			=> $this->input->post('guru_id')
-			];
+			$hari_id 	= $this->input->post('hari_id');
+			$seling_id	= $this->input->post('seling_id');
+			$kelas_id	= $this->input->post('kelas_id');
+			$guru_id	= $this->input->post('guru_id');
 
-			$this->Jadwal_model->save($data);
-			$respond['status'] 	= 1;
-			$respond['pesan']	= 'Jadwal berhasil ditambahkan';
+			if($this->Jadwal_model->jadwal_exists($hari_id,$seling_id,$kelas_id) ) {
+				$respond['status'] 	= 0;
+				$respond['pesan']	= 'Terjadi duplikasi pada jadwal';
+			}
+			else {
+				$data = [
+					'sekolah_id'		=> user()->sekolah_id,
+					'hari_id'			=> $hari_id,
+					'seling_id'			=> $seling_id,
+					'kelas_id'			=> $kelas_id,
+					'guru_id'			=> $guru_id
+				];
+
+				$this->Jadwal_model->save($data);
+				$respond['status'] 	= 1;
+				$respond['pesan']	= 'Jadwal berhasil ditambahkan';
+			}
 		}
 		else {
 			$respond['status'] = 0;
@@ -92,6 +103,71 @@ class Jadwal extends CI_Controller
 		$data['guru'] = $guru;
 
 		$this->template->load('app','core/jadwal_edit',$data);
+	}
+
+	/**
+	 * Show selected by id
+	 *
+	 * @access public
+	 */
+	public function show($id)
+	{
+		$data['data'] = 0;
+
+		if(!empty($id)) {
+			$query = $this->Jadwal_model->get_by_kolom('id',$id);
+			if($query->num_rows() > 0) {
+				$query = $query->row();
+
+				$data =  [
+					'data'		=> 1,
+					'id'		=> $query->id,
+					'hari_id'	=> $query->hari_id,
+					'seling_id'	=> $query->seling_id,
+					'kelas_id'	=> $query->kelas_id
+				];
+
+			}
+		}
+		echo json_encode($data);
+	}
+
+	/**
+	 * Update table in database
+	 *
+	 * @access public
+	 * @method post
+	 */
+	public function update()
+	{
+		if($this->form_validation->run('jadwal/tambah')) {
+			
+			$hari_id 	= $this->input->post('hari_id');
+			$seling_id	= $this->input->post('seling_id');
+			$kelas_id	= $this->input->post('kelas_id');
+
+			if($this->Jadwal_model->jadwal_exists($hari_id,$seling_id,$kelas_id) ) {
+				$respond['status'] 	= 0;
+				$respond['pesan']	= 'Terjadi duplikasi pada jadwal';
+			}
+			else {
+				$data = [
+					'hari_id'			=> $hari_id,
+					'seling_id'			=> $seling_id,
+					'kelas_id'			=> $kelas_id,
+				];
+				$id = $this->input->post('id');
+				$this->Jadwal_model->update('id',$id,$data);
+				$respond['status'] 	= 1;
+				$respond['pesan']	= 'Jadwal berhasil diubah';
+			}
+		} 
+		else {
+			$respond['status']	= 0;
+			$respond['pesan'] 	= validation_errors();
+		}
+
+		echo json_encode($respond);
 	}
 
 	/**
@@ -133,17 +209,20 @@ class Jadwal extends CI_Controller
 		$table 			= 'jadwal';
 		$primaryKey		= 'id'; 
 		$columns		= array(
-			array( 'db' => 'id', 'dt' => 0),
+			array( 
+				'db' => 'id', 
+				'dt' => 'id'
+			),
 			array( 
 				'db' => 'hari_id', 
-				'dt' => 1,
+				'dt' => 'hari',
 				'formatter' => function($d) {
 					return hari($d);
 				}
 			),
 			array( 
 				'db' => 'seling_id', 
-				'dt' => 2,
+				'dt' => 'seling',
 				'formatter' => function($d) {
 					return '<span class="badge badge-success">'.seling($d,'dari').'</span>
 					<span class="badge badge-danger">'.seling($d,'sampai').'</span>';
@@ -151,21 +230,21 @@ class Jadwal extends CI_Controller
 			),
 			array( 
 				'db' => 'kelas_id', 
-				'dt' => 3,
+				'dt' => 'kelas',
 				'formatter' => function($d) {
 					return kelas($d);
 				}
 			),
 			array(
 				'db'=> 'id',
-				'dt' => 4,
+				'dt' => 'aksi',
 				'formatter' => function($d) {
-					return anchor('oke/oke','Edit','class="btn btn-success btn-sm"');
+					return '<button type="button" onclick="edit(\''.$d.'\')" class="btn btn-success btn-sm">Edit</button>';
 				}
 			),
 			array(
 				'db' =>'id',
-				'dt'  => 5,
+				'dt'  => 'check',
 				'formatter' => function ($d) {
 					return '<input type="checkbox" name="edit-data-id['.$d.']" >';
 				}

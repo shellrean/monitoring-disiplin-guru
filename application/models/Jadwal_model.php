@@ -51,6 +51,19 @@ class Jadwal_model extends CI_Model
 	{
 		return $this->db->get_where($this->table,['guru_id' => $guru_id]);
 	}
+
+	/**
+	 * Get data selected by kolom
+	 *
+	 * @access public
+	 * @return object
+	 * @param string $kolom
+	 * @param string $isi
+	 */
+	public function get_by_kolom($kolom, $isi) 
+	{
+		return $this->db->get_where($this->table,[$kolom => $isi]);
+	}
 	
 	/**
 	 * Delete data in table 
@@ -62,6 +75,45 @@ class Jadwal_model extends CI_Model
 	public function delete($kolom, $isi)
 	{
 		$this->db->where($kolom,$isi)->delete($this->table);
+		return true;
+	}
+
+	/**
+	 * Jadwal exist
+	 *
+	 * @access public
+	 * @param 
+	 */
+	public function jadwal_exists($hari,$seling,$kelas)
+	{
+		$this->db->where([
+			'hari_id'	=> $hari,
+			'seling_id'	=> $seling,
+			'kelas_id'	=> $kelas
+		]);
+
+		$query = $this->db->get($this->table);
+
+		if($query->num_rows() > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Update table
+	 *
+	 * @access public
+	 * @param string $kolom,
+	 * @param string $isi,
+	 * @param array $data
+	 */
+	public function update($kolom,$isi,$data)
+	{
+		$this->db->where($kolom,$isi)
+				->update($this->table,$data);
 		return true;
 	}
 }

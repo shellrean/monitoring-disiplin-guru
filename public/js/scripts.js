@@ -80,5 +80,31 @@ $(function() {
 		})
 	})
 
+	$('#form-edit').submit(function(e) {
+      e.preventDefault();
+      let base = $('#base_url').val()
+
+      showLoading()
+      $.ajax({
+        url: base+'/update',
+        type: "POST",
+        data:$('#form-edit').serialize(),
+        cache: false,
+        success(res) {
+          let obj = $.parseJSON(res);
+          if(obj.status  == 1) {
+            refresh_table();
+            hideLoading();
+            $('#modal-edit').modal('hide');
+            notify_success(obj.pesan)
+          }
+          else {
+            hideLoading();
+            $('#form-pesan-edit').html(pesan_err(obj.pesan))
+          }
+        }
+      })
+  	})
+
 
 })

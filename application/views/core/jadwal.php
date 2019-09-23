@@ -2,8 +2,7 @@
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header py-3">
-        <i class="fa fa-align-justify"></i> Daftar jadwal 
-        <button class="btn btn-success btn-sm pull-right" onclick="tambah()">Tambah jadwal</button>
+        <i class="fa fa-align-justify"></i> Daftar jadwal
       </div>
       <input type="hidden" id="base_url" value="<?= base_url('guru') ?>">
       <form id="form-hapus">
@@ -20,7 +19,6 @@
               <th width="200px">Kamis</th>
               <th width="200px">Jumat</th>
               <th>Aksi</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -91,17 +89,10 @@
               <td width="100px">
                 <a href="<?= base_url('jadwal/edit/'.$g->id) ?>" class="btn btn-success btn-sm">Manage</a>
               </td>
-              <td width="50px">
-                <input type="checkbox" name="">
-              </td>
             </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
-      </div>
-      <div class="card-footer">
-        <button type="button" id="btn-edit-hapus" class="btn btn-primary btn-sm">Hapus</button>
-        <button type="button" id="btn-edit-pilih" class="btn btn-danger btn-sm pull-right">Pilih Semua</button>
       </div>
     </form>
     </div>
