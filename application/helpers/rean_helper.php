@@ -110,3 +110,35 @@
 
   }
   
+  /**
+   * Helper untuk mengambil data kelas dengan id
+   * @return string
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function kelas($id)
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('kelas',['id' => $id])->row()->nama;
+  }
+  
+  /**
+   * Helper untuk mengambil data seling dengan id
+   * @return string
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function seling($id,$prev)
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('seling',['id' => $id])->row()->$prev;
+  }
+
+  /**
+   * Helper untuk mengambil nama hari
+   * @return string
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function hari($id)
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('hari',['id' => $id])->row()->nama;
+  }

@@ -66,3 +66,21 @@ $config['guru/tambah'] = [
 		'rules'	=> 'required'
 	]
 ];
+
+$config['jadwal/tambah'] = [
+	[
+		'field'	=> 'hari_id',
+		'label'	=> 'hari',
+		'rules'	=> 'required'
+	],
+	[
+		'field'	=> 'seling_id',
+		'label'	=> 'interval',
+		'rules'	=> 'required'
+	],
+	[
+		'field'	=> 'kelas_id',
+		'label'	=> 'kelas',
+		'rules'	=> 'required'
+	],
+];

@@ -1,75 +1,61 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Guru extends CI_Controller 
+class Kelas extends CI_Controller
 {
-	/** @var breadcrumb */
+	/** @var breadcrumb **/
 	private $breadcrumb;
 
 	/**
-     * GuruController constructor.
-     *
-     * @throws
-     */
+	 * KelasController constructor
+	 *
+	 * @throws
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 
 		is_login();
-		
-		/** @load Library **/
+
+		/** @load library **/
 		$this->load->library('Ssp');
 		$this->load->library('form_validation');
 
-		/** @load Model **/
-		$this->load->model('Guru_model');
+		/** @load model **/
+		$this->load->model('Kelas_model');
 
-		/** @set bredcrumb **/
+		/** @set breadcrumb **/
 		$this->breadcrumb = array(
 			'<li class="breadcrumb-item">Administrative</li>',
-			'<li class="breadcrumb-item active">Guru</li>'
+			'<li class="breadcrumb-item active">Kelas</li>'
 		);
 		$this->template->set('breadcrumb',$this->breadcrumb);
 	}
 
 	/**
-	 * Show our dashboard for guru page
+	 * Show our dashboard for kelas page
 	 *
 	 * @access public
 	 */
 	public function index()
 	{
-		$this->template->load('app','core/guru');
+		$this->template->load('app','core/kelas');
 	}
 
 	/**
 	 * Insert data into table
 	 *
 	 * @method post
-	 * @access public
+	 * @access public 
 	 * @return json
 	 */
 	public function store()
 	{
-		if($this->form_validation->run('guru/tambah')) {
-			$data = [
-				'id_sekolah'		=> user()->sekolah_id,
-				'nip'				=> $this->input->post('nip'),
-				'nama'				=> $this->input->post('nama'),
-			];
+		if($this->form_validation->run('kelas/tambah')) {
 
-			$this->Guru_model->save($data);
-			$respond['status'] 	= 1;
-			$respond['pesan']	= 'Data guru berhasil disimpan';
 		}
-		else {
-			$respond['status']	= 0;
-			$respond['pesan']	= validation_errors();
-		}
-
-		echo json_encode($respond);
 	}
-
+	
 	/**
 	 * Delete data from table
 	 *
@@ -79,24 +65,7 @@ class Guru extends CI_Controller
 	 */
 	public function destroy()
 	{
-		$data_id = $this->input->post('edit-data-id', TRUE);
-		$this->form_validation->set_rules('edit-data-id[]', 'Data','required|strip_tags');
 
-		if($this->form_validation->run() == TRUE) {
-			foreach($data_id as $kunci => $isi) {
-				if($isi == "on" ) {
-					$this->Guru_model->delete('id', $kunci);
-				}
-			}
-
-			$respon['status'] = 1;
-			$respon['pesan'] = 'Data guru berhasil dihapus';
-		} else {
-			$respon['status'] = 0;
-			$respon['pesan'] = validation_errors();
-		}
-
-		echo json_encode($respon);
 	}
 
 	/**
@@ -119,12 +88,12 @@ class Guru extends CI_Controller
 	 */
 	public function data()
 	{
-		$table 			= 'guru';
+		$table 			= 'kelas';
 		$primaryKey		= 'id';
 		$columns		= array(
 			array( 'db' => 'id', 'dt' => 'id'),
 			array( 'db' => 'nama', 'dt' => 'nama'),
-			array( 'db' => 'nip', 'dt' => 'nip'),
+			array( 'db' => 'tingkat', 'dt' => 'tingkat'),
 			array(
 				'db'=> 'id',
 				'dt' => 'aksi',
@@ -147,12 +116,12 @@ class Guru extends CI_Controller
 			'db'	=> $this->db->database,
 			'host'	=> $this->db->hostname
 		);
-		
-		$where = "id_sekolah = 'user()->sekolah_id";
 
 		echo json_encode(
-			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where)
+			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns)
 		);
-	}	
+	}
+
+
 
 }

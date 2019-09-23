@@ -65,7 +65,7 @@ $(function() {
 			data: $('#form-tambah').serialize(),
 			cache: false,
 			success(res) {
-				let obj = $.parseJSON(res)
+				let obj = $.parseJSON(res);
 				if(obj.status == 1) {
 					refresh_table()
 					hideLoading();
