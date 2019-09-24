@@ -68,15 +68,43 @@ class Interval extends CI_Controller
 	}
 
 	/**
+	 * Insert data into table
+	 *
+	 * @method post
+	 * @access public
+	 * @return boolean
+	 */
+	public function update()
+	{
+		var_dump($this->input->post());
+		if($this->form_validation->run('interval/tambah')) {
+			$data = [
+				'dari'				=> $this->input->post('dari'),
+				'sampai'			=> $this->input->post('sampai')
+			];
+
+			$id = $this->input->post('id');
+			$this->Interval_model->update('id',$id,$data);
+
+			redirect('interval');
+		}
+		else {
+			redirect('interval');
+		}
+		
+	}
+
+	/**
 	 * Delete data from table
 	 *
 	 * @method post
 	 * @access public
 	 * @return json
 	 */
-	public function destroy()
-	{
-
+	public function destroy($id = null)
+	{	
+		$this->Interval_model->delete('id',$id);
+		redirect('interval');
 	}
 
 	/**
@@ -88,7 +116,23 @@ class Interval extends CI_Controller
 	 */
 	public function show($id = null) 
 	{
+		$data['data'] = 0;
 
+ 		if(!empty($id)) {
+ 			$query = $this->Interval_model->get_by_kolom('id',$id);
+ 			if($query->num_rows() > 0) {
+ 				$query = $query->row();
+ 				$data = [
+ 					'data'	=> 1,
+ 					'id'	=> $query->id,
+ 					'hari_id'=> $query->hari_id,
+ 					'dari'	=> $query->dari,
+ 					'sampai'	=> $query->sampai
+ 				];
+ 			}
+ 		}
+
+ 		echo json_encode($data);
 	}
 
 	/**

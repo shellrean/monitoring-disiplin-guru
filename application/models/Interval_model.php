@@ -33,5 +33,47 @@ class Interval_model extends CI_Model
 		return true;
 	}
 
+	/**
+	 * Get data selected by kolom
+	 *
+	 * @access public
+	 * @return object
+	 * @param string $kolom
+	 * @param string $isi
+	 */
+	public function get_by_kolom($kolom, $isi) 
+	{
+		return $this->db->get_where('seling',[$kolom => $isi]);
+	}
+
+	/**
+	 * Delete selected by kolom
+	 *
+	 * @access public
+	 * @return object
+	 * @param string $kolom
+	 * @param string $isi
+	 */
+	public function delete($kolom,$isi)
+    {
+        $this->db->where($kolom, $isi)
+                 ->delete('seling');
+    }
+
+    /**
+	 * Update table
+	 *
+	 * @access public
+	 * @param string $kolom,
+	 * @param string $isi,
+	 * @param array $data
+	 */
+	public function update($kolom,$isi,$data)
+	{
+		$this->db->where($kolom,$isi)
+				->update('seling',$data);
+		return true;
+	}
+
 
 }
