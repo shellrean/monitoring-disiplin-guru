@@ -16,7 +16,7 @@ class Interval_model extends CI_Model
 
 	public function get_all()
 	{
-		$this->db->from($this->table);
+		$this->db->from($this->table); 
 		return $this->db->get();
 	}
 
@@ -29,8 +29,9 @@ class Interval_model extends CI_Model
 
 	public function save($data)
 	{
-		$this->db->insert($this->table,$data);
+		$this->db->insert('seling',$data);
 		return true;
 	}
+
 
 }

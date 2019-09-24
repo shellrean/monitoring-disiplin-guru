@@ -13,7 +13,7 @@ class Interval extends CI_Controller
 	 */
 	public function __construct()
 	{
-		parent::__construct();
+		parent::__construct(); 
 
 		is_login();
 
@@ -39,7 +39,7 @@ class Interval extends CI_Controller
 	 */
 	public function index()
 	{
-		$data['datas'] = $this->Interval_model->get_all(user()->sekolah_id)->result();
+		$data['datas'] = $this->db->get('hari')->result();
 		$this->template->load('app','core/interval',$data);
 	}
 
@@ -52,14 +52,19 @@ class Interval extends CI_Controller
 	 */
 	public function store()
 	{
-		$data = [
-			'sekolah_id'	=> user()->sekolah_id,
-			'nama'			=> $this->input->post('hari'),
-		];
+		if($this->form_validation->run('interval/tambah')) {
+			$data = [
+				'sekolah_id'		=> user()->sekolah_id,
+				'hari_id'			=> $this->input->post('hari_id'),
+				'dari'				=> $this->input->post('dari'),
+				'sampai'			=> $this->input->post('sampai')
+			];
 
-		$this->Interval_model->save($data);
+			$this->Interval_model->save($data);
 
-		redirect('interval');
+			redirect('interval');
+		}
+		
 	}
 
 	/**

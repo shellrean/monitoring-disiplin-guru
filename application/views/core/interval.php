@@ -17,7 +17,7 @@
               <th>Interval</th>
               <th>Aksi</th>
               <th></th>
-            </tr>
+            </tr> 
           </thead>
           <tbody>
             <?php $no=1; foreach($datas as $d): ?>
@@ -25,11 +25,11 @@
               <td><?= $no++ ?></td>
               <td><?= $d->nama ?></td>
               <?php 
-                $data = $this->db->get_where('seling',['hari_id' => $d->id])->result();
+                $data = $this->db->get_where('seling',['hari_id' => $d->id,'sekolah_id' => user()->sekolah_id])->result();
               ?>
               <td>
                 <?php foreach($data as $ds): ?>
-                  <span class="btn btn-primary btn-sm"><?= $ds->dari ?>-<?= $ds->sampai ?></span>
+                  <span class="btn btn-primary btn-sm"><?= $ds->dari ?> - <?= $ds->sampai ?></span>
                 <?php endforeach; ?>
               </td>
               <td>
@@ -58,7 +58,7 @@
     <form method="post" action="<?= base_url('interval/store') ?>" >
     <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah hari</h5>
+          <h5 class="modal-title">Tambah interval</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -66,8 +66,20 @@
         <div class="modal-body">
           <div id="form-pesan"></div>
           <div class="form-group">
-            <label>Nama Hari</label>
-            <input type="text" class="form-control" id="hari" name="hari" placeholder="Hari" autofocus>
+            <label>Hari</label>
+            <select class="form-control" name="hari_id">
+              <?php foreach($datas as $d): ?>
+                <option value="<?= $d->id ?>"><?= $d->nama ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dari</label>
+            <input type="time" name="dari" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Sampai</label>
+            <input type="time" name="sampai" class="form-control">
           </div>
         </div>
         <div class="modal-footer">
@@ -82,6 +94,7 @@
 <script>
   function tambah()
   {
+    $('#form-pesan').html('');
     $('#modal-tambah').modal('show')
   }
 </script>

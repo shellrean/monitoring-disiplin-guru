@@ -116,9 +116,10 @@ class Kelas extends CI_Controller
 			'db'	=> $this->db->database,
 			'host'	=> $this->db->hostname
 		);
-
+		$sekolah_id = user()->sekolah_id;
+		$where = "sekolah_id = '$sekolah_id'";
 		echo json_encode(
-			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns)
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns, $where)
 		);
 	}
 

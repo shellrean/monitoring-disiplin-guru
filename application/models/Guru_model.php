@@ -7,7 +7,7 @@
  * @package Guru_model
  * @since 1.0
  */
-
+ 
 
 class Guru_model extends CI_Model
 {
@@ -63,7 +63,39 @@ class Guru_model extends CI_Model
 	 */
 	public function delete($kolom, $isi)
 	{
+		if($kolom == 'id') {
+			$this->db->where('guru_id', $isi)->delete('jadwal');
+		}
+
 		$this->db->where($kolom,$isi)->delete($this->table);
+		return true;
+	}
+
+	/**
+	 * Get data selected by kolom
+	 *
+	 * @access public
+	 * @return object
+	 * @param string $kolom
+	 * @param string $isi
+	 */
+	public function get_by_kolom($kolom, $isi) 
+	{
+		return $this->db->get_where($this->table,[$kolom => $isi]);
+	}
+
+	/**
+	 * Update table
+	 *
+	 * @access public
+	 * @param string $kolom,
+	 * @param string $isi,
+	 * @param array $data
+	 */
+	public function update($kolom,$isi,$data)
+	{
+		$this->db->where($kolom,$isi)
+				->update($this->table,$data);
 		return true;
 	}
 

@@ -11,7 +11,7 @@ class Guru extends CI_Controller
      *
      * @throws
      */
-	public function __construct()
+	public function __construct() 
 	{
 		parent::__construct();
 
@@ -71,6 +71,33 @@ class Guru extends CI_Controller
 	}
 
 	/**
+	 * Update data
+	 *
+	 * @method post
+	 * @access public
+	 * @return json
+	 */
+	public function update()
+	{
+		if($this->form_validation->run('guru/tambah')) {
+			$data = [
+				'nip'				=> $this->input->post('nip'),
+				'nama'				=> $this->input->post('nama'),
+			];
+			$id = $this->input->post('id');
+			$this->Guru_model->update('id',$id,$data);
+			$respond['status'] 	= 1;
+			$respond['pesan']	= 'Data guru berhasil ubah';
+		}
+		else {
+			$respond['status']	= 0;
+			$respond['pesan']	= validation_errors();
+		}
+
+		echo json_encode($respond);
+	}
+
+	/**
 	 * Delete data from table
 	 *
 	 * @method post
@@ -108,7 +135,22 @@ class Guru extends CI_Controller
 	 */
 	public function show($id=null) 
 	{
- 
+ 		$data['data'] = 0;
+
+ 		if(!empty($id)) {
+ 			$query = $this->Guru_model->get_by_kolom('id',$id);
+ 			if($query->num_rows() > 0) {
+ 				$query = $query->row();
+ 				$data = [
+ 					'data'	=> 1,
+ 					'id'	=> $query->id,
+ 					'nip'	=> $query->nip,
+ 					'nama'	=> $query->nama
+ 				];
+ 			}
+ 		}
+
+ 		echo json_encode($data);
 	}
 
 	/**
@@ -129,7 +171,7 @@ class Guru extends CI_Controller
 				'db'=> 'id',
 				'dt' => 'aksi',
 				'formatter' => function($d) {
-					return anchor('oke/oke','Edit','class="btn btn-success btn-sm"');
+					return '<button type="button" onclick="edit(\''.$d.'\')" class="btn btn-success btn-sm">Edit</button>';
 				}
 			),
 			array(
@@ -148,10 +190,10 @@ class Guru extends CI_Controller
 			'host'	=> $this->db->hostname
 		);
 		
-		$where = "id_sekolah = 'user()->sekolah_id";
-
+		$sekolah_id = user()->sekolah_id;
+		$where = "id_sekolah = '$sekolah_id'";
 		echo json_encode(
-			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where)
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns, $where)
 		);
 	}	
 
