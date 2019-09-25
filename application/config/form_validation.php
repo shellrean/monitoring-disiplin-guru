@@ -97,3 +97,16 @@ $config['interval/tambah'] = [
 		'rules'	=> 'required'
 	],
 ];
+
+$config['kelas/tambah'] = [
+	[
+		'field'	=> 'tingkat',
+		'label'	=> 'tingkat',
+		'rules'	=> 'required'
+	],
+	[
+		'field'	=> 'nama',
+		'label'	=> 'nama',
+		'rules'	=> 'required'
+	],
+];

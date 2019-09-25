@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12"> 
     <div class="card">
       <div class="card-header py-3">
         <i class="fa fa-align-justify"></i> Daftar guru 
@@ -106,7 +106,7 @@
       </div>
       <div class="modal-body">
         <strong>Peringatan</strong>
-        Data guru yang dipilih akan dihapus beserta dengan data yang berelasi dengan sekolah.
+        Data guru yang dipilih akan dihapus beserta dengan data yang berelasi dengan tabel guru.
         <br /><br />
         Apakah anda yakin untuk menghapus data guru ?
       </div>
@@ -122,7 +122,6 @@
 <script>
   function tambah()
   {
-    $('#form-pesan').html('')
     $('#nip').val('')
     $('#nama').val('')
     

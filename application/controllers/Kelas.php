@@ -7,7 +7,7 @@ class Kelas extends CI_Controller
 	private $breadcrumb;
 
 	/**
-	 * KelasController constructor
+	 * KelasController constructor 
 	 *
 	 * @throws
 	 */
@@ -52,8 +52,51 @@ class Kelas extends CI_Controller
 	public function store()
 	{
 		if($this->form_validation->run('kelas/tambah')) {
+			$data = [
+				'sekolah_id'		=> user()->sekolah_id,
+				'tingkat'			=> $this->input->post('tingkat'),
+				'nama'				=> $this->input->post('nama')
+			];
 
+			$this->Kelas_model->save($data);
+			$respond['status'] = 1;
+			$respond['pesan'] = 'Data kelas berhasil disimpan';
 		}
+		else {
+			$respond['status'] = 0;
+			$respond['pesan'] = validation_errors();
+		}
+
+		echo json_encode($respond);
+	}
+
+	/**
+	 * Update data
+	 *
+	 * @method post
+	 * @access public
+	 * @return json
+	 */
+	public function update()
+	{
+		if($this->form_validation->run('kelas/tambah')) {
+			$data = [
+				'tingkat'			=> $this->input->post('tingkat'),
+				'nama'				=> $this->input->post('nama')
+			];
+
+			$id = $this->input->post('id');
+			$this->Kelas_model->update('id',$id,$data);
+
+			$respond['status'] = 1;
+			$respond['pesan'] = 'Data kelas berhasil diubah';
+		}
+		else {
+			$respond['status'] = 0;
+			$respond['pesan'] = validation_errors();
+		}
+
+		echo json_encode($respond);
 	}
 	
 	/**
@@ -65,7 +108,24 @@ class Kelas extends CI_Controller
 	 */
 	public function destroy()
 	{
+		$data_id = $this->input->post('edit-data-id', TRUE);
+		$this->form_validation->set_rules('edit-data-id[]', 'Data','required|strip_tags');
 
+		if($this->form_validation->run() == TRUE) {
+			foreach($data_id as $kunci => $isi) {
+				if($isi == "on" ) {
+					$this->Kelas_model->delete('id', $kunci);
+				}
+			}
+
+			$respon['status'] = 1;
+			$respon['pesan'] = 'Data Kelas berhasil dihapus';
+		} else {
+			$respon['status'] = 0;
+			$respon['pesan'] = validation_errors();
+		}
+
+		echo json_encode($respon);
 	}
 
 	/**
@@ -77,7 +137,21 @@ class Kelas extends CI_Controller
 	 */
 	public function show($id=null) 
 	{
- 
+ 		$data['data'] = 0;
+
+ 		if(!empty($id)) {
+ 			$query = $this->Kelas_model->get_by_kolom('id',$id);
+ 			if($query->num_rows() > 0) {
+ 				$query = $query->row();
+ 				$data = [
+ 					'data'	=> 1,
+ 					'id'	=> $query->id,
+ 					'tingkat'=> $query->tingkat,
+ 					'nama'	=> $query->nama
+ 				];
+ 			}
+ 		}
+ 		echo json_encode($data);
 	}
 
 	/**
@@ -98,7 +172,7 @@ class Kelas extends CI_Controller
 				'db'=> 'id',
 				'dt' => 'aksi',
 				'formatter' => function($d) {
-					return anchor('oke/oke','Edit','class="btn btn-success btn-sm"');
+					return '<button type="button" onclick="edit(\''.$d.'\')" class="btn btn-success btn-sm">Edit</button>';
 				}
 			),
 			array(

@@ -65,10 +65,89 @@
     </form>
   </div>
 </div>
+
+<!-- Modal Tambah Data -->
+<div class="modal fade" id="modal-edit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="form-edit" >
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit kelas</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="form-pesan-edit"></div>
+          <div class="form-group">
+            <label>Tingkat</label>
+            <input type="hidden" name="id" id="e-id">
+            <select class="form-control" name="tingkat" id="e-tingkat">
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" class="form-control" id="e-nama" name="nama" placeholder="Nama">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" id="edit-simpan" class="btn btn-success">Simpan</button>
+        </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-hapus" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hapus kelas</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong>Peringatan</strong>
+        Kelas yang dipilih akan dihapus beserta dengan data yang berelasi dengan tabel kelas.
+        <br /><br />
+        Apakah anda yakin untuk menghapus data kelas ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-hapus" class="btn btn-danger btn-sm">Hapus</button>
+        <a href="#" class="btn btn-primary btn-sm" data-dismiss="modal">Tutup</a>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   function tambah()
   {
     $('#form-pesan').html('')
+    $('#nama').val('')
+
+    $('#modal-tambah').modal('show')
+  }
+
+  function edit(id)
+  {
+    showLoading()
+    $.getJSON('<?= base_url('kelas/show/') ?>'+id, function(data) {
+      if(data.data == 1) {
+        $('#e-id').val(data.id)
+        $('#e-tingkat').val(data.tingkat)
+        $('#e-nama').val(data.nama)
+         hideLoading()
+
+        $('#form-pesan-edit').html('');
+        $('#modal-edit').modal('show');
+      }
+    })
+
   }
 
   $(function() {

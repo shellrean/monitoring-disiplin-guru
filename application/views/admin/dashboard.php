@@ -90,7 +90,7 @@
 	          			$dat1 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
           			?>
           			<td>
-          			<?php foreach($dat as $t): ?>
+          			<?php foreach($dat1 as $t): ?>
 	          		<?php 
 		          	if (kelas($t->kelas_id,'tingkat') != 11) { 
 				        continue;
@@ -137,10 +137,10 @@
 	          		<?php
 	          			$id_sek = user()->sekolah_id;
 		          		$day 	= date('N', time());
-	          			$dat 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
+	          			$dat2 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
           			?>
           			<td>
-          			<?php foreach($dat as $t): ?>
+          			<?php foreach($dat2 as $t): ?>
 	          		<?php 
 		          	if (kelas($t->kelas_id,'tingkat') != 12) { 
 				        continue;
