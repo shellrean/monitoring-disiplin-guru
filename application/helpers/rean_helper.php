@@ -122,6 +122,16 @@
   }
   
   /**
+   * Helper untuk mengambil data kelas dengan id
+   * @return string
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function guru($id)
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('guru',['id' => $id])->row()->nama;
+  }
+  /**
    * Helper untuk mengambil data seling dengan id
    * @return string
    * @author Kuswandi <wandinak17@gmail.com>

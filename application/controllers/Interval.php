@@ -39,7 +39,7 @@ class Interval extends CI_Controller
 	 */
 	public function index()
 	{
-		$data['datas'] = $this->db->get('hari')->result();
+		$data['datas'] = $this->Interval_model->get_interval(user()->sekolah_id)->result();
 		$this->template->load('app','core/interval',$data);
 	}
 
@@ -55,7 +55,6 @@ class Interval extends CI_Controller
 		if($this->form_validation->run('interval/tambah')) {
 			$data = [
 				'sekolah_id'		=> user()->sekolah_id,
-				'hari_id'			=> $this->input->post('hari_id'),
 				'dari'				=> $this->input->post('dari'),
 				'sampai'			=> $this->input->post('sampai')
 			];
@@ -76,7 +75,6 @@ class Interval extends CI_Controller
 	 */
 	public function update()
 	{
-		var_dump($this->input->post());
 		if($this->form_validation->run('interval/tambah')) {
 			$data = [
 				'dari'				=> $this->input->post('dari'),
@@ -125,7 +123,6 @@ class Interval extends CI_Controller
  				$data = [
  					'data'	=> 1,
  					'id'	=> $query->id,
- 					'hari_id'=> $query->hari_id,
  					'dari'	=> $query->dari,
  					'sampai'	=> $query->sampai
  				];

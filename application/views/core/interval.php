@@ -10,26 +10,17 @@
         <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
-              <th width="50px">#</th>
-              <th width="150px">Hari</th>
               <th>Interval</th>
             </tr> 
           </thead>
           <tbody>
-            <?php $no=1; foreach($datas as $d): ?>
             <tr>
-              <td><?= $no++ ?></td>
-              <td><?= $d->nama ?></td>
-              <?php 
-                $data = $this->db->get_where('seling',['hari_id' => $d->id,'sekolah_id' => user()->sekolah_id])->result();
-              ?>
               <td>
-                <?php foreach($data as $ds): ?>
+                <?php foreach($datas as $ds): ?>
                   <button class="btn btn-primary btn-sm" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
                 <?php endforeach; ?>
               </td>
             </tr>
-            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
@@ -50,14 +41,6 @@
         </div>
         <div class="modal-body">
           <div id="form-pesan"></div>
-          <div class="form-group">
-            <label>Hari</label>
-            <select class="form-control" name="hari_id">
-              <?php foreach($datas as $d): ?>
-                <option value="<?= $d->id ?>"><?= $d->nama ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
           <div class="form-group">
             <label>Dari</label>
             <input type="time" name="dari" class="form-control">
@@ -92,7 +75,6 @@
           <div class="form-group">
             <label>Dari</label>
             <input type="hidden" name="id" id="id">
-            <input type="hidden" name="hari_id" id="hari_id" value="1">
             <input type="time" name="dari" id="dari" class="form-control">
           </div>
           <div class="form-group">

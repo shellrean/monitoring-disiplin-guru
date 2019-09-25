@@ -13,7 +13,7 @@ class Kelas_model extends CI_Model
 {
 	/** @var table **/
 	private $table = 'kelas';
-
+ 
 	/**
 	 * Get all data from table
 	 *
@@ -29,5 +29,17 @@ class Kelas_model extends CI_Model
 			$this->db->where('tingkat',$tingkat);
 		}
 		return $this->db->get();
+	}
+
+	/**
+	 * Get all data from table
+	 *
+	 * @access public
+	 * @return object
+	 * @param integer $sekolah_id
+	 */
+	public function get_by_kolom_sekolah($sekolah_id,$kolom, $isi) 
+	{
+		return $this->db->get_where($this->table,['sekolah_id' => $sekolah_id, $kolom => $isi]);
 	}
 }

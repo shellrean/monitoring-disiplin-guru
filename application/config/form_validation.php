@@ -87,11 +87,6 @@ $config['jadwal/tambah'] = [
 
 $config['interval/tambah'] = [
 	[
-		'field'	=> 'hari_id',
-		'label'	=> 'hari',
-		'rules'	=> 'required'
-	],
-	[
 		'field'	=> 'dari',
 		'label'	=> 'dari',
 		'rules'	=> 'required'

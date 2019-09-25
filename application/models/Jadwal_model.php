@@ -74,6 +74,10 @@ class Jadwal_model extends CI_Model
 	 */
 	public function delete($kolom, $isi)
 	{
+		if($kolom == 'id') {
+			$this->db->where('jadwal_id',$isi)->delete('lapor');
+		}
+		
 		$this->db->where($kolom,$isi)->delete($this->table);
 		return true;
 	}

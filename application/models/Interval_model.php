@@ -23,7 +23,8 @@ class Interval_model extends CI_Model
 	public function get_interval($sekolah_id)
 	{
 		$this->db->from('seling')
-				 ->where('sekolah_id',$sekolah_id);
+				 ->where('sekolah_id',$sekolah_id)
+				 ->order_by('dari');
 		return $this->db->get();
 	}
 
