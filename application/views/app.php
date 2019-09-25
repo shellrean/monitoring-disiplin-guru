@@ -89,12 +89,6 @@
         <li class="nav-item px-3">
           <a class="nav-link" href="<?= base_url() ?>">Dashboard</a>
         </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Users</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Settings</a>
-        </li>
       </ul>
       <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown">
@@ -103,11 +97,10 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
-              <strong>Account</strong>
+              <strong>Akun</strong>
             </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-envelope-o"></i> Messages
-              <span class="badge badge-success">42</span>
+            <a class="dropdown-item" href="<?= base_url('user/profile') ?>">
+              <i class="fa fa-user"></i> Profile
             </a>
             <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
               <i class="fa fa-lock"></i> Logout</a>
@@ -128,7 +121,6 @@
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url() ?>">
                 <i class="nav-icon icon-speedometer"></i> Dashboard
-                <span class="badge badge-primary">Default</span>
               </a>
             </li>
             <li class="nav-title">Utama</li>
@@ -206,6 +198,9 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+
+
 
   </body>
 </html>

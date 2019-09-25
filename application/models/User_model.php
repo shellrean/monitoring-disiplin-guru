@@ -25,4 +25,19 @@ class User_model extends CI_Model
                  ->from($this->table);
         return $this->db->get();
 	}
+
+    /**
+     * Update table
+     *
+     * @access public
+     * @param string $kolom,
+     * @param string $isi,
+     * @param array $data
+     */
+    public function update($kolom,$isi,$data)
+    {
+        $this->db->where($kolom,$isi)
+                ->update($this->table,$data);
+        return true;
+    }
 }

@@ -116,5 +116,35 @@ class User extends CI_Controller
 		return $rows;
 	}
 
+	public function profile()
+	{
+		/** @set bredcrumb **/
+		$this->breadcrumb = array(
+			'<li class="breadcrumb-item active">Profile</li>',
+		);
+		$this->template->set('breadcrumb',$this->breadcrumb);	
+		$this->template->load('app','user/profile');
+	}
+
+	public function update_profile()
+	{
+		$data = [
+			'username' => $this->input->post('username'),
+			'name'		=> $this->input->post('name')
+		];
+		$password = $this->input->post('password');
+
+		if($password != null || $password !='') {
+			$data['password'] = password_hash($password, PASSWORD_DEFAULT);
+		}
+
+		$id = user()->id;
+		$this->User_model->update('id',$id,$data);
+		$respond['status'] 	= 1;
+		$respond['pesan']	= 'Profile berhasil ubah';
+
+		echo json_encode($respond);
+	}
+
 
 }
