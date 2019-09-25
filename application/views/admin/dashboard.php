@@ -2,8 +2,7 @@
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header py-3">
-        <i class="fa fa-align-justify"></i> Siwalidi app
-        <input type="hidden" name="base" id="base_url" value="<?= base_url() ?>">
+        <i class="fa fa-align-justify"></i> Dashboard app
       </div>
       <input type="hidden" name="base" id="base_url" value="<?= base_url() ?>">
       <div class="card-body">
@@ -21,34 +20,34 @@
 		<div class="tab-content" id="myTabContent">
 		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable">
-		  	<thead>
-		  		<tr>
-		  			<td>Interval</td>
-		  			<td>Jadwal</td>
-		  		</tr>
-		  	</thead>
-          <tbody>
-          	<?php foreach($data as $d): ?>
-          	<tr>
-          		<?php 
-					$seling = $this->db->get_where('seling',['id' => $d->seling_id])->row();
-          		?>
-          		<td width="150px">
-          			<span class="badge badge-success"><?= $seling->dari ?></span> 
-          			<span class="badge badge-danger"><?= $seling->sampai ?></span>
-          		</td>
-          		<?php
-          		$date = date('N', time());
-          		$dat = $this->db->get_where('jadwal',['sekolah_id' => 12,'hari_id' => $date, 'seling_id' => $d->seling_id])->result();
-          		?>
-          		<td>
-          		<?php foreach($dat as $t): ?>
-          		
+			  	<thead>
+			  		<tr>
+			  			<td>Interval</td>
+			  			<td>Jadwal</td>
+			  		</tr>
+			  	</thead>
+	          	<tbody>
+	          	<?php foreach($data as $d): ?>
+	          	<tr>
+	          		<td width="150px">
+	          			<span class="badge badge-success"><?= seling($d->seling_id, 'dari') ?></span> 
+	          			<span class="badge badge-danger"><?= seling($d->seling_id, 'sampai') ?></span>
+	          		</td>
+	          		<?php
+	          			$id_sek = user()->sekolah_id;
+		          		$day 	= date('N', time());
+	          			$dat 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
+          			?>
+          			<td>
+          			<?php foreach($dat as $t): ?>
+	          		<?php 
+		          	if (kelas($t->kelas_id,'tingkat') != 10) { 
+				        continue;
+				    } ?>
           			<?php
 						$date = date('Y-m-d', time());
-						$cek = $this->db->get_where('lapor',['sekolah_id' => user()->sekolah_id, 'tanggal' => $date, 'jadwal_id' => $t->id])->row();
+						$cek = $this->Lapor_model->get_by_date_id($id_sek,$date, $t->id)->row();
           			?>
-
 					<span class="badge">
 						<?php if($cek): ?>
 							<?php if($cek->status == 0): ?>
@@ -62,22 +61,122 @@
 					</span>
 					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
-          		<?php endforeach; ?>
-          		</td>
-          	</tr>
-          <?php endforeach; ?>
-          </tbody>
-        </table>
+	          		<?php endforeach; ?>
+	          		</td>
+	          	</tr>
+	          <?php endforeach; ?>
+	          </tbody>
+	        </table>
 		  </div>
-		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable2">
+			  	<thead>
+			  		<tr>
+			  			<td>Interval</td>
+			  			<td>Jadwal</td>
+			  		</tr>
+			  	</thead>
+	          	<tbody>
+
+	          	<?php foreach($data as $d): ?>
+	          	<tr>
+	          		<td width="150px">
+	          			<span class="badge badge-success"><?= seling($d->seling_id, 'dari') ?></span> 
+	          			<span class="badge badge-danger"><?= seling($d->seling_id, 'sampai') ?></span>
+	          		</td>
+	          		<?php
+	          			$id_sek = user()->sekolah_id;
+		          		$day 	= date('N', time());
+	          			$dat1 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
+          			?>
+          			<td>
+          			<?php foreach($dat as $t): ?>
+	          		<?php 
+		          	if (kelas($t->kelas_id,'tingkat') != 11) { 
+				        continue;
+				    } ?>
+          			<?php
+						$date = date('Y-m-d', time());
+						$cek = $this->Lapor_model->get_by_date_id($id_sek,$date, $t->id)->row();
+          			?>
+					<span class="badge">
+						<?php if($cek): ?>
+							<?php if($cek->status == 0): ?>
+								<i class="icon-close text-danger"></i>
+							<?php else: ?>
+								<i class="icon-check text-success"></i>
+							<?php endif; ?>
+						<?php else: ?>
+							<i class="icon-info text-warning"></i>
+						<?php endif; ?>
+					</span>
+					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+          		
+	          		<?php endforeach; ?>
+	          		</td>
+	          	</tr>
+	          <?php endforeach; ?>
+	          </tbody>
+	        </table>
+		  </div>
+		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable3">
+			  	<thead>
+			  		<tr>
+			  			<td>Interval</td>
+			  			<td>Jadwal</td>
+			  		</tr>
+			  	</thead>
+	          	<tbody>
+	          	<?php foreach($data as $d): ?>
+	          	<tr>
+	          		<td width="150px">
+	          			<span class="badge badge-success"><?= seling($d->seling_id, 'dari') ?></span> 
+	          			<span class="badge badge-danger"><?= seling($d->seling_id, 'sampai') ?></span>
+	          		</td>
+	          		<?php
+	          			$id_sek = user()->sekolah_id;
+		          		$day 	= date('N', time());
+	          			$dat 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
+          			?>
+          			<td>
+          			<?php foreach($dat as $t): ?>
+	          		<?php 
+		          	if (kelas($t->kelas_id,'tingkat') != 12) { 
+				        continue;
+				    } ?>
+          			<?php
+						$date = date('Y-m-d', time());
+						$cek = $this->Lapor_model->get_by_date_id($id_sek,$date, $t->id)->row();
+          			?>
+					<span class="badge">
+						<?php if($cek): ?>
+							<?php if($cek->status == 0): ?>
+								<i class="icon-close text-danger"></i>
+							<?php else: ?>
+								<i class="icon-check text-success"></i>
+							<?php endif; ?>
+						<?php else: ?>
+							<i class="icon-info text-warning"></i>
+						<?php endif; ?>
+					</span>
+					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+          		
+	          		<?php endforeach; ?>
+	          		</td>
+	          	</tr>
+	          <?php endforeach; ?>
+	          </tbody>
+	        </table>
+		  </div>
 		</div>
       </div>
       <div class="card-footer">
       	<small>
       		<i>Informasi:</i>
       	</small> <br>
-      	<small><i class="icon-info text-info"></i> Tahan mouse di atas button kelas untuk melihat nama guru</small> <br>
+      	<small><i class="icon-info text-info"></i> 
+      	Tahan mouse di atas button kelas untuk melihat nama guru</small> <br>
       	
       	<small><i class="icon-info text-warning"></i>
       		Data belum di simpan

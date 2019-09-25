@@ -7,7 +7,8 @@ class Panel extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model('Kelas_model');
+		$this->load->model('Jadwal_model');
+		$this->load->model('Lapor_model');
 	}
 
 	public function index()
@@ -19,43 +20,16 @@ class Panel extends CI_Controller
 	{
 		$sekolah_id = user()->sekolah_id;
 
-
-		// $data['t10'] = $this->Kelas_model->get_by_kolom_sekolah($sekolah_id, 'tingkat', 10)->result();
-		// $data['t11'] = $this->Kelas_model->get_by_kolom_sekolah($sekolah_id, 'tingkat', 11)->result();
-		// $data['t12'] = $this->Kelas_model->get_by_kolom_sekolah($sekolah_id, 'tingkat', 12)->result();
-
-		$date = date('N', time());
+		$day = date('N', time());
+		
 		$this->db->group_by('seling_id');
-		$data['data'] = $this->db->get_where('jadwal',['sekolah_id' => $sekolah_id, 'hari_id' => $date])->result();
+		$data = $this->Jadwal_model->get_by_day($sekolah_id, $day)->result();
+		
+		$data['data'] = $data;
+
+		
 		$this->template->load('app','admin/dashboard',$data);
 
-		// $date = date('N', time());
-		// $try = $this->db->get_where('jadwal',['sekolah_id' => $sekolah_id, 'hari_id' => $date])->result();
-
-		// foreach($try as $t) {
-		// 	$apa['seling'] = $this->db->get_where('seling',['id' => $t->seling_id])->row();
-		// 	$apa['kelas'] = $this->db->get_where('kelas',['id' => $t->kelas_id])->row();
-		// }
-		// // $try  = $this->db->get_where('seling',['dari' => $date])->result();
-
-		// echo json_encode($apa);
-
-		// $this->db->where('dari <', $date);
-		// $try = $this->db->get('seling')->result();
-
-		// var_dump($try);
-		
-
-
-		 // $now = new DateTime();
-   //  $startdate = new DateTime("2014-11-20");
-   //  $enddate = new DateTime("2020-01-20");
-
-   //  if($startdate <= $now && $now <= $enddate) {
-   //      echo "Yes";
-   //  }else{
-   //      echo "No";
-   //  }
 	}
 
 	public function store()

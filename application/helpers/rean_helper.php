@@ -115,10 +115,10 @@
    * @return string
    * @author Kuswandi <wandinak17@gmail.com>
    */
-  function kelas($id)
+  function kelas($id,$attr="nama")
   {
     $CI =& get_instance();
-    return $CI->db->get_where('kelas',['id' => $id])->row()->nama;
+    return $CI->db->get_where('kelas',['id' => $id])->row()->$attr;
   }
   
   /**

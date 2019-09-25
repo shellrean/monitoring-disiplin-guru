@@ -11,7 +11,7 @@
 
 class Jadwal_model extends CI_Model
 {
-
+ 
 	/** @var table **/
 	private $table = 'jadwal';
 
@@ -120,4 +120,25 @@ class Jadwal_model extends CI_Model
 				->update($this->table,$data);
 		return true;
 	}
+
+	/**
+	 * Get jadwal by day
+	 *
+	 * @access public 
+	 * @param int $sekolah_id
+	 * @param int $day
+	 */
+	public function get_by_day($sekolah_id,$day,$seling=false) 
+	{
+		$where = [
+			'sekolah_id'	=> $sekolah_id,
+			'hari_id'		=> $day
+		];
+		if($seling) {
+			$where['seling_id'] = $seling;
+		}
+		return $this->db->get_where($this->table, $where);
+	}
+
+
 }
