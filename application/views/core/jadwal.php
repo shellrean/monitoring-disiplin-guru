@@ -31,8 +31,8 @@
                   $senin = $this->db->get_where('jadwal',['hari_id' => 1, 'guru_id' => $g->id])->result();
                 ?>
                 <?php foreach ($senin as $s): ?>
-                    <div>
-                      <span class="badge badge-primary"><?= kelas($s->kelas_id) ?></span>
+                    <div class="border border-primary my-1">
+                      <span class="badge badge-light"><?= kelas($s->kelas_id) ?></span>
                       <span class="badge badge-success"><?= seling($s->seling_id,'dari') ?></span>
                       <span class="badge badge-danger"><?= seling($s->seling_id,'sampai') ?></span>
                     </div>
@@ -43,8 +43,8 @@
                   $selasa = $this->db->get_where('jadwal',['hari_id' => 2, 'guru_id' => $g->id])->result();
                 ?>
                 <?php foreach ($selasa as $s): ?>
-                    <div>
-                      <span class="badge badge-primary"><?= kelas($s->kelas_id) ?></span>
+                    <div class="border border-primary my-1">
+                      <span class="badge badge-light"><?= kelas($s->kelas_id) ?></span>
                       <span class="badge badge-success"><?= seling($s->seling_id,'dari') ?></span>
                       <span class="badge badge-danger"><?= seling($s->seling_id,'sampai') ?></span>
                     </div>
@@ -55,8 +55,8 @@
                   $rabu = $this->db->get_where('jadwal',['hari_id' => 3, 'guru_id' => $g->id])->result();
                 ?>
                 <?php foreach ($rabu as $s): ?>
-                    <div>
-                      <span class="badge badge-primary"><?= kelas($s->kelas_id) ?></span>
+                    <div class="border border-primary my-1">
+                      <span class="badge badge-light"><?= kelas($s->kelas_id) ?></span>
                       <span class="badge badge-success"><?= seling($s->seling_id,'dari') ?></span>
                       <span class="badge badge-danger"><?= seling($s->seling_id,'sampai') ?></span>
                     </div>
@@ -67,8 +67,8 @@
                   $kamis = $this->db->get_where('jadwal',['hari_id' => 4, 'guru_id' => $g->id])->result();
                 ?>
                 <?php foreach ($kamis as $s): ?>
-                    <div>
-                      <span class="badge badge-primary"><?= kelas($s->kelas_id) ?></span>
+                    <div class="border border-primary my-1">
+                      <span class="badge badge-light"><?= kelas($s->kelas_id) ?></span>
                       <span class="badge badge-success"><?= seling($s->seling_id,'dari') ?></span>
                       <span class="badge badge-danger"><?= seling($s->seling_id,'sampai') ?></span>
                     </div>
@@ -79,8 +79,8 @@
                   $jumat = $this->db->get_where('jadwal',['hari_id' => 5, 'guru_id' => $g->id])->result();
                 ?>
                 <?php foreach ($jumat as $s): ?>
-                    <div>
-                      <span class="badge badge-primary"><?= kelas($s->kelas_id) ?></span>
+                    <div class="border border-primary my-1">
+                      <span class="badge badge-light"><?= kelas($s->kelas_id) ?></span>
                       <span class="badge badge-success"><?= seling($s->seling_id,'dari') ?></span>
                       <span class="badge badge-danger"><?= seling($s->seling_id,'sampai') ?></span>
                     </div>

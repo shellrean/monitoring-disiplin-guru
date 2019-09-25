@@ -6,7 +6,7 @@ class Panel extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
+		is_login();
 		$this->load->model('Jadwal_model');
 		$this->load->model('Lapor_model');
 	}
@@ -18,6 +18,7 @@ class Panel extends CI_Controller
 
 	public function dashboard()
 	{
+
 		$sekolah_id = user()->sekolah_id;
 
 		$day = date('N', time());

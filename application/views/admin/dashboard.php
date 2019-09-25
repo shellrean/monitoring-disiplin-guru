@@ -233,39 +233,36 @@
 
 <script>
 	function show(id) {
-	    // console.log('oke')
-		url = $('#base_url').val();
+		$stsr = $('#stsr').val()
+			url = $('#base_url').val();
+		    jadwal_id = id
+		    showLoading()
 
-// 	    sekolah_id = $('#sekolah_id').val()
-// 	    tanggal	= $('#tanggal').val()
-	    jadwal_id = id
-	    // console.log(jadwal_id)
-	    showLoading()
+		    $.ajax({
+		    	
+		    	url: url+'/panel/get',
+		    	type: "POST",
+		    	data: {
+		    		jadwal_id : jadwal_id
+		    	},
+		    	cache: false,
+		    	success: function(res) {
+		    		let obj = $.parseJSON(res)
+		    		$('#status').val(`${obj.status}`)
+		    		$('#jadwal_id').val(`${obj.jadwal_id}`)
+		    		if(obj.lapor_id  != 0) {
+		    			$('#lapor_id').val(`${obj.lapor_id}`)
+		    		}
+		    		if(obj.keterangan != null) {
 
-	    $.ajax({
-	    	
-	    	url: url+'/panel/get',
-	    	type: "POST",
-	    	data: {
-	    		jadwal_id : jadwal_id
-	    	},
-	    	cache: false,
-	    	success: function(res) {
-	    		let obj = $.parseJSON(res)
-	    		$('#status').val(`${obj.status}`)
-	    		$('#jadwal_id').val(`${obj.jadwal_id}`)
-	    		if(obj.lapor_id  != 0) {
-	    			$('#lapor_id').val(`${obj.lapor_id}`)
-	    		}
-	    		if(obj.keterangan != null) {
-
-	    		$('#Keterangan').val(`${obj.keterangan}`)
-	    		}
-	    	}
-	    	
-	    })
-	    hideLoading()
-	    $('#modal-check').modal('show')
+		    		$('#Keterangan').val(`${obj.keterangan}`)
+		    		}
+		    	}
+		    	
+		    })
+		    hideLoading()
+		    $('#modal-check').modal('show')
+		
 	};
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
