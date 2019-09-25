@@ -9,7 +9,7 @@
     <meta name="author" content="Kuswandi">
     <link rel="shortcut icon" href="<?= base_url('public/img/logo-dki.png') ?>" type="image/x-icon">
  
-    <title>UnName APP</title>
+    <title>Siwalidi App</title>
     <!-- Icons-->
     <link href="<?= base_url() ?>node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
