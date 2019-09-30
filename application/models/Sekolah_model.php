@@ -34,6 +34,22 @@ class Sekolah_model extends CI_Model
 
     public function delete($kolom,$isi)
     {
+        if($kolom == 'id') {
+            $this->db->where('id_sekolah',$isi)
+                    ->delete('guru');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('jadwal');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('jadwal');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('kelas');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('lapor');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('seling');
+            $this->db->where('sekolah_id',$isi)
+                    ->delete('user');
+        }
         $this->db->where($kolom, $isi)
                  ->delete($this->table);
     }

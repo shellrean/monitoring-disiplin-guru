@@ -40,4 +40,31 @@ class User_model extends CI_Model
                 ->update($this->table,$data);
         return true;
     }
+
+    /**
+     * Delete data in table 
+     * 
+     * @access public
+     * @param string $kolom
+     * @param string $isi
+     */
+    public function delete($kolom, $isi)
+    {
+        $this->db->where($kolom,$isi)->delete($this->table);
+        return true;
+    }
+    /**
+     * Get data selected by kolom
+     *
+     * @access public
+     * @return object
+     * @param string $kolom
+     * @param string $isi
+     */
+    public function get_by_kolom($kolom, $isi) 
+    {
+        return $this->db->get_where($this->table,[$kolom => $isi]);
+    }
+
+
 }

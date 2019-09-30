@@ -54,7 +54,29 @@ $config['user'] = [
 	],
 
 ];
+$config['user/edit'] = [
+	[
+		'field' => 'sekolah_id',
+		'label'	=> 'id sekolah',
+		'rules' => 'required'
+	],
+	[
+		'field' => 'username',
+		'label'	=> 'user login',
+		'rules' => 'required'
+	],
+	[
+		'field' => 'name',
+		'label'	=> 'nama',
+		'rules' => 'required'
+	],
+	[
+		'field' => 'is_active',
+		'label'	=> 'status',
+		'rules' => 'required'
+	],
 
+];
 $config['guru/tambah'] = [
 	[
 		'field'	=> 'nip',

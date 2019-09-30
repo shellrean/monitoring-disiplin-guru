@@ -8,6 +8,7 @@
       <form id="form-hapus">
       <input type="hidden" name="check" id="check" value="0">
       <div class="card-body">
+        <div class="table-responsive-sm">
         <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
@@ -93,6 +94,7 @@
             <?php endforeach; ?>
           </tbody>
         </table>
+        </div>
       </div>
     </form>
     </div>

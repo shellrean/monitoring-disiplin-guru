@@ -7,6 +7,7 @@
       </div>
       <input type="hidden" id="base_url" value="<?= base_url('jadwal') ?>">
       <div class="card-body">
+        <div class="table-responsive-sm">
         <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
@@ -16,13 +17,18 @@
           <tbody>
             <tr>
               <td>
+                <?php if($datas): ?>
                 <?php foreach($datas as $ds): ?>
                   <button class="btn btn-primary btn-sm" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
                 <?php endforeach; ?>
+                <?php else: ?>
+                  <i>Belum ada data interval yang dimasukkan</i>
+                <?php endif; ?>
               </td>
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   </div>

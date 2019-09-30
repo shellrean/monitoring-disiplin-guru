@@ -11,6 +11,7 @@ class User extends CI_Controller
 		$this->load->model('User_model');
 		$this->load->model('Sekolah_model');
 		$this->load->library('form_validation');
+		$this->load->library('Ssp');
 	}
 
 	public function index()
@@ -23,7 +24,7 @@ class User extends CI_Controller
 		$data['sekolah'] = $this->Sekolah_model->get_all()->result();
 		$this->template->load('app','user/index',$data);
 	}
-	public function tambah()
+	public function store() 
 	{
 		if($this->form_validation->run('user')) {
 			$data = [
@@ -46,74 +47,115 @@ class User extends CI_Controller
         
         echo json_encode($status);
 	}
-	public function get_datatable()
+	/**
+	 * Show the selected row
+	 *
+	 * @method get ajax_request
+	 * @param integer $id
+	 * @return json
+	 */
+	public function show($id=null) 
 	{
-		$search = "";
-		$start = 0;
-		$rows = 0;
+ 		$data['data'] = 0;
 
-		if (isset($_GET['sSearch']) && $_GET['sSearch'] != "" ) {
-			$search = $_GET['sSearch'];
-		}
+ 		if(!empty($id)) {
+ 			$query = $this->User_model->get_by_kolom('id',$id);
+ 			if($query->num_rows() > 0) {
+ 				$query = $query->row();
+ 				$data = [
+ 					'data'	=> 1,
+ 					'id'	=> $query->id,
+ 					'sekolah_id'	=> $query->sekolah_id,
+ 					'username'	=> $query->username,
+ 					'name'	=> $query->name,
+ 					'is_active' => $query->is_active
+ 				];
+ 			}
+ 		}
 
-		$start = $this->get_start();
-		$rows = $this->get_rows();
+ 		echo json_encode($data);
+	}
 
-		$query = $this->User_model->get_datatable($start, $rows, 'name', $search);
-		$iFilteredTotal = $query->num_rows();
+
+	public function data()
+	{
+		$table 			= 'user';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array( 'db' => 'username', 'dt' => 'username'),
+			array( 'db' => 'name', 'dt' => 'name'),
+			array( 
+				'db' => 'is_active', 
+				'dt' => 'status',
+				'formatter' => function($d) {
+					return status($d);
+				}
+			),
+			array( 
+				'db' => 'sekolah_id', 
+				'dt' => 'sekolah',
+				'formatter' => function($d) {
+					return sekolah($d);
+				}
+			),
+			array(
+				'db'=> 'id',
+				'dt' => 'aksi',
+				'formatter' => function($d) {
+					return '<button type="button" onclick="edit(\''.$d.'\')" class="btn btn-success btn-sm">Edit</button>';
+				}
+			),
+			array(
+				'db' =>'id',
+				'dt'  => 'check',
+				'formatter' => function ($d) {
+					return '<input type="checkbox" name="edit-data-id['.$d.']" >';
+				}
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
 		
-		$iTotal= $this->User_model->get_datatable_count('name', $search)->row()->hasil;
-
-		$output = array(
-			"sEcho" => intval($_GET['sEcho']),
-	        "iTotalRecords" => $iTotal,
-	        "iTotalDisplayRecords" => $iTotal,
-	        "aaData" => array()
-	    );
-
-	    $i=$start;
-		$query = $query->result();
-	    foreach ($query as $temp) {			
-			$record = array();
-            
-			$record[] = ++$i;
-            $record[] = $temp->username;
-            $record[] = $temp->name;
-            $record[] = $temp->is_active;
-            $record[] = $temp->sekolah_id;
-
-            $record[] = '<button type="button" onclick="edit(\''.$temp->id.'\')" class="btn btn-success btn-sm">Edit</button>';
-            $record[] = '<input type="checkbox" name="edit-data-id['.$temp->id.']" >';
-
-			$output['aaData'][] = $record;
-		}
-
-		echo json_encode($output);
+		$where = "role_id = '2'";
+		echo json_encode(
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns,$where)
+		);
 
 	}
 
-	public function get_start() {
-		$start = 0;
-		if (isset($_GET['iDisplayStart'])) {
-			$start = intval($_GET['iDisplayStart']);
-
-			if ($start < 0)
-				$start = 0;
+	/**
+	 * Update data
+	 *
+	 * @method post
+	 * @access public
+	 * @return json
+	 */
+	public function update()
+	{
+		if($this->form_validation->run('user/edit')) {
+			$data = [
+				'sekolah_id'		=> $this->input->post('sekolah_id'),
+				'username'			=> $this->input->post('username'),
+				'name'				=> $this->input->post('name'),
+				'is_active'			=> $this->input->post('is_active'),
+			];
+			$id = $this->input->post('id');
+			$this->User_model->update('id',$id,$data);
+			$respond['status'] 	= 1;
+			$respond['pesan']	= 'Data user berhasil ubah';
+		}
+		else {
+			$respond['status']	= 0;
+			$respond['pesan']	= validation_errors();
 		}
 
-		return $start;
-	}
-
-	public function get_rows() {
-		$rows = 10;
-		if (isset($_GET['iDisplayLength'])) {
-			$rows = intval($_GET['iDisplayLength']);
-			if ($rows < 5 || $rows > 500) {
-				$rows = 10;
-			}
-		}
-
-		return $rows;
+		echo json_encode($respond);
 	}
 
 	public function profile()
@@ -144,6 +186,28 @@ class User extends CI_Controller
 		$respond['pesan']	= 'Profile berhasil ubah';
 
 		echo json_encode($respond);
+	}
+
+	public function destroy()
+	{
+		$data_id = $this->input->post('edit-data-id', TRUE);
+		$this->form_validation->set_rules('edit-data-id[]', 'Data','required|strip_tags');
+
+		if($this->form_validation->run() == TRUE) {
+			foreach($data_id as $kunci => $isi) {
+				if($isi == "on" ) {
+					$this->User_model->delete('id', $kunci);
+				}
+			}
+
+			$respon['status'] = 1;
+			$respon['pesan'] = 'Data user berhasil dihapus';
+		} else {
+			$respon['status'] = 0;
+			$respon['pesan'] = validation_errors();
+		}
+
+		echo json_encode($respon);
 	}
 
 

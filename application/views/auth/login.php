@@ -49,9 +49,6 @@
                   <div class="col-6">
                     <button class="btn btn-primary px-4" type="submit">Login</button>
                   </div>
-                  <div class="col-6 text-right">
-                    <button class="btn btn-link px-0" type="button">Lupa password?</button>
-                  </div>
                 </div>
                 </form>
               </div>

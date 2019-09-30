@@ -9,6 +9,7 @@
       <form id="form-hapus">
       <input type="hidden" name="check" id="check" value="0">
       <div class="card-body">
+        <div class="table-responsive-sm">
         <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead> 
             <tr>
@@ -22,6 +23,7 @@
           <tbody>
           </tbody>
         </table>
+        </div>
       </div>
       <div class="card-footer">
         <button type="button" id="btn-edit-hapus" class="btn btn-primary btn-sm">Hapus</button>

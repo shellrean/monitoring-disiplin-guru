@@ -126,10 +126,10 @@
    * @return string
    * @author Kuswandi <wandinak17@gmail.com>
    */
-  function guru($id)
+  function guru($id,$attr='nama')
   {
     $CI =& get_instance();
-    return $CI->db->get_where('guru',['id' => $id])->row()->nama;
+    return $CI->db->get_where('guru',['id' => $id])->row()->$attr;
   }
   /**
    * Helper untuk mengambil data seling dengan id
@@ -151,4 +151,25 @@
   {
     $CI =& get_instance();
     return $CI->db->get_where('hari',['id' => $id])->row()->nama;
+  }
+  /**
+   * Helper untuk mengambil nama sekolah
+   * @return string
+   * @author Kuswandi <wandinak17@gmail.com>
+   */
+  function sekolah($id,$attr="nama_sekolah")
+  {
+    $CI =& get_instance();
+    return $CI->db->get_where('sekolah',['id' => $id])->row()->$attr;
+  }
+
+  function status($id)
+  {
+    if($id == '1') {
+      $badge = '<span class="badge badge-success">Aktif</span>';
+    }
+    else {
+      $badge = '<span class="badge badge-danger">Tidak aktif</span>';
+    }
+    return $badge;
   }

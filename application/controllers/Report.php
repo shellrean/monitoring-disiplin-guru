@@ -22,6 +22,7 @@ class Report extends CI_Controller
 		$this->load->library('form_validation');
 
 		/** @load Model **/
+		$this->load->model('Sekolah_model');
 
 		/** @set bredcrumb **/
 		$this->breadcrumb = array(
@@ -98,6 +99,7 @@ class Report extends CI_Controller
 
 		// echo json_encode($data['qry']);
 		$data['date'] = $date;
+		$data['sekolah'] = $this->Sekolah_model->get_by_kolom('id',user()->sekolah_id)->row();
 		$pdfFilePath = 'Report_'.$date.'.pdf';
 
 		$wm = base_url() . 'public/img/logo-dki.png';
@@ -105,6 +107,7 @@ class Report extends CI_Controller
 		$m_pdf->showWatermarkImage = true;
 		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.$date.'<i></b>');
 
+		$m_pdf->AddPage('L');
 		$r_header = $this->load->view('cetak/r_header',$data,true);
 		$m_pdf->WriteHTML($r_header);
 
@@ -115,4 +118,5 @@ class Report extends CI_Controller
     	$m_pdf->WriteHTML($r_footer);
     	$m_pdf->Output($pdfFilePath,'I'); 
 	}
+
 }

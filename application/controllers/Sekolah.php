@@ -23,7 +23,7 @@ class Sekolah extends CI_Controller
 		$this->template->load('app','sekolah/index');
 	}
 
-	public function tambah()
+	public function store()
 	{
 		if($this->form_validation->run('sekolah/tambah')) {
 			$data = [
@@ -83,7 +83,7 @@ class Sekolah extends CI_Controller
 		echo json_encode($output);
 	}
 
-	public function hapus_sekolah()
+	public function destroy()
 	{
 		$data_id = $this->input->post('edit-data-id', TRUE);
 		$this->form_validation->set_rules('edit-data-id[]', 'Data','required|strip_tags');
@@ -103,7 +103,7 @@ class Sekolah extends CI_Controller
          echo json_encode($status);   
 	}
 
-	public function get_by_id($id=null) {
+	public function show($id=null) {
 		$data['data'] = 0;
 
 		if(!empty($id)) {

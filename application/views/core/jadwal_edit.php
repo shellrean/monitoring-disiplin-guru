@@ -21,6 +21,7 @@
           </tr>
         </table>
         <br>
+        <div class="table-responsive-sm">
         <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
@@ -35,6 +36,7 @@
           <tbody>
           </tbody>
         </table>
+        </div>
       </div>
       </form>
       <div class="card-footer">

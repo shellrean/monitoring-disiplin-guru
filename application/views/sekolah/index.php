@@ -5,22 +5,25 @@
         <i class="fa fa-align-justify"></i> Daftar sekolah 
         <button class="btn btn-success btn-sm pull-right" onclick="tambah()">Tambah sekolah</button>
       </div>
+      <input type="hidden" id="base_url" value="<?= base_url('sekolah') ?>">
       <form id="form-hapus">
       <input type="hidden" name="check" id="check" value="0">
       <div class="card-body">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="table-sekolah">
+        <div class="table-responsive">
+        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
               <th>#</th>
               <th>Nama Sekolah</th>
-              <th>Alamat Sekolah</th>
+              <th width="65%">Alamat Sekolah</th>
               <th>Aksi</th>
               <th></th>
             </tr> 
-          </thead>
+          </thead> 
           <tbody>
           </tbody>
         </table>
+        </div>
       </div>
       <div class="card-footer">
         <button type="button" id="btn-edit-hapus" class="btn btn-primary btn-sm">Hapus</button>
@@ -120,10 +123,6 @@
 
 
 <script>
-  function refresh_table() {
-    $('#table-sekolah').dataTable().fnReloadAjax();
-  }
-
   function tambah()
   {
     $('#form-pesan').html('');
@@ -148,118 +147,8 @@
     })
   }
 
-  function hideLoading()
-  {
-    $('#modal-proses').on('shown.bs.modal', function(e) {
-      $('#modal-proses').modal('hide')
-    })
-  }
-
   $(function(){
-    $('#btn-edit-pilih').click(function(e){
-      if($('#check').val() == 0) {
-        $(':checkbox').each(function() {
-          this.checked = true;
-        });
-        $('#check').val('1');
-      } else {
-        $(':checkbox').each(function() {
-          this.checked = false;
-        });
-        $('#check').val('0');
-      }
-    })
-
-    $('#btn-edit-hapus').click(function() {
-      $('#modal-hapus').modal('show')
-    })
-
-    $('#btn-hapus').click(function(){
-      $('#form-hapus').submit();
-    })
-
-    $('#form-hapus').submit(function(e){
-      e.preventDefault();
-        $("#modal-proses").modal('show');
-        $.ajax({
-          url:"<?= site_url().'/sekolah' ;?>/hapus_sekolah",
-          type:"POST",
-          data:$('#form-hapus').serialize(),
-          cache: false,
-          success:function(respon){
-            let obj = $.parseJSON(respon);
-            if(obj.status==1){
-              refresh_table();
-              hideLoading();
-              $("#modal-hapus").modal('hide');
-              notify_success(obj.pesan);
-              $('#check').val('0');
-            }else{
-              hideLoading();
-              $('#modal-hapus').modal('hide');
-              notify_error(obj.pesan);
-            }
-          }
-        });
-        
-      return false;
-    });
-
-    $('#form-tambah').submit(function(e){
-      e.preventDefault();
-
-      $('#modal-proses').modal('show');
-      $.ajax({
-        url:"<?= base_url('sekolah/tambah') ?>",
-        type:"POST",
-        data:$('#form-tambah').serialize(),
-        cache: false,
-        success: function(res) {
-          let obj = $.parseJSON(res);
-          if(obj.status == 1) {
-            refresh_table();
-            hideLoading();
-            $("#modal-tambah").modal('hide');
-            notify_success(obj.pesan);
-          } else {
-            hideLoading();
-            $("#form-pesan").html(pesan_err(obj.pesan));
-          }
-        }
-      })
-      return false;
-    })
-
-    $('#edit-simpan').click(function() {
-      $('#form-edit').submit();
-    })
-
-    $('#form-edit').submit(function(e) {
-      e.preventDefault();
-      $('#modal-proses').modal('show');
-      $.ajax({
-        url: "<?= base_url('sekolah/edit') ?>",
-        type: "POST",
-        data:$('#form-edit').serialize(),
-        cache: false,
-        success(res) {
-          let obj = $.parseJSON(res);
-          if(obj.status  == 1) {
-            refresh_table();
-            hideLoading();
-            $('#modal-edit').modal('hide');
-            notify_success(obj.pesan)
-          }
-          else {
-            hideLoading();
-            $('#form-pesan-edit').html(pesan_err(obj.pesan))
-          }
-        }
-      })
-
-      return false;
-    })
-    $('#table-sekolah').DataTable({
+    $('#appTable').DataTable({
       "paging" : true,
       "iDisplayLength":10,
       "bProcessing": true,

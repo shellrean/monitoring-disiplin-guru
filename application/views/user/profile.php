@@ -25,10 +25,10 @@
         </button>
       </div>
       <div class="card-footer">
-        <small><i class="icon-info text-info"></i> 
-        Password biarkan kosong bila tidak mau diubah</small> <br>
-        <small><i class="icon-info text-info"></i> 
-        Diwajibkan logout dan login kembali bila user login diubah</small> <br>
+        <span><i class="icon-info text-info"></i> 
+        Password biarkan kosong bila tidak mau diubah</span> <br>
+        <span><i class="icon-info text-info"></i> 
+        Diwajibkan logout dan login kembali bila user login diubah</span> <br>
       </div>
       </form>
     </div>

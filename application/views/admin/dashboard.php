@@ -19,6 +19,7 @@
 		</ul>
 		<div class="tab-content" id="myTabContent">
 		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+		  	<div class="table-responsive-sm">
 		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable">
 			  	<thead>
 			  		<tr>
@@ -52,6 +53,8 @@
 						<?php if($cek): ?>
 							<?php if($cek->status == 0): ?>
 								<i class="icon-close text-danger"></i>
+							<?php elseif($cek->status == 2): ?>
+								<i class="icon-clock text-warning"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -67,8 +70,10 @@
 	          <?php endforeach; ?>
 	          </tbody>
 	        </table>
+	    	</div>
 		  </div>
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+		  	<div class="table-responsive-sm">
 		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable2">
 			  	<thead>
 			  		<tr>
@@ -103,6 +108,8 @@
 						<?php if($cek): ?>
 							<?php if($cek->status == 0): ?>
 								<i class="icon-close text-danger"></i>
+							<?php elseif($cek->status == 2): ?>
+								<i class="icon-clock text-warning"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -118,8 +125,10 @@
 	          <?php endforeach; ?>
 	          </tbody>
 	        </table>
+	    	</div>
 		  </div>
 		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+		  	<div class="table-responsive-sm">
 		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable3">
 			  	<thead>
 			  		<tr>
@@ -153,6 +162,8 @@
 						<?php if($cek): ?>
 							<?php if($cek->status == 0): ?>
 								<i class="icon-close text-danger"></i>
+							<?php elseif($cek->status == 2): ?>
+								<i class="icon-clock text-warning"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -168,27 +179,30 @@
 	          <?php endforeach; ?>
 	          </tbody>
 	        </table>
+	    	</div>
 		  </div>
 		</div>
       </div>
       <div class="card-footer">
-      	<small>
+      	<span>
       		<i>Informasi:</i>
-      	</small> <br>
-      	<small><i class="icon-info text-info"></i> 
-      	Tahan mouse di atas button kelas untuk melihat nama guru</small> <br>
+      	</span> <br>
+      	<span><i class="icon-info text-info"></i> 
+      	Tahan mouse di atas button kelas untuk melihat nama guru</span> <br>
       	
-      	<small><i class="icon-info text-warning"></i>
+      	<span><i class="icon-info text-warning"></i>
       		Data belum di simpan
-      	</small> <br>
-      	<small><i class="icon-close text-danger"></i>
+      	</span> <br>
+      	<span><i class="icon-close text-danger"></i>
       		Guru tidak masuk
-      	</small> <br>
+      	</span> <br>
       	
-      	<small><i class="icon-check text-success"></i>
+      	<span><i class="icon-check text-success"></i>
       		Guru masuk
-      	</small>
-      	
+      	</span><br>
+       	<span>
+      		<i class="icon-clock text-warning"></i> Guru telambat masuk kelas
+      	</span>
       </div>
     </form>
     </div>
@@ -214,6 +228,7 @@
             <input type="hidden" name="lapor_id" id="lapor_id" value="0">
            	 <select class="form-control" id="status" name="status">
            	 	<option value="1">Masuk</option>
+           	 	<option value="2">Telat</option>
            	 	<option value="0">Tidak</option>
            	 </select>
            </div>

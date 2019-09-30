@@ -27,7 +27,7 @@ class Interval extends CI_Controller
 		/** @set bredcrumb **/
 		$this->breadcrumb = array(
 			'<li class="breadcrumb-item">Administrative</li>',
-			'<li class="breadcrumb-item active">Jadwal</li>'
+			'<li class="breadcrumb-item active">Interval</li>'
 		);
 		$this->template->set('breadcrumb', $this->breadcrumb);
 	}

@@ -1,5 +1,5 @@
 <h4><?= $sekolah->nama_sekolah; ?></h4>
-<h5> Report <?= $date; ?> </h5> <br>
+<h5> Periode <?= $dari; ?> - <?= $sampai ?> </h5> <br>
 <table class="table table-bordered">
 	<tr>
 		<td>No. </td>
@@ -46,7 +46,7 @@
 	<?php endforeach; ?>
 	<?php else: ?>
 		<tr>
-			<td colspan="4"><i>Semua guru masuk hari ini</i></td>
+			<td colspan="4"><i>Tidak ada guru yang tidak masuk atau telat pada periode ini</i></td>
 		</tr>
 
 	<?php endif; ?>

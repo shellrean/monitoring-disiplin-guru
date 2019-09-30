@@ -146,39 +146,11 @@
           </div> 
         </div>
       </main>
-      <aside class="aside-menu">
-        <!-- Tab panes-->
-        <div class="tab-content">
-          <div class="tab-pane active" id="timeline" role="tabpanel">
-            <div class="list-group list-group-accent">
-              <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Hari ini</div>
-              <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                <div>Meeting with
-                  <strong>Lucas</strong>
-                </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  1 - 3pm</small>
-                <small class="text-muted">
-                  <i class="icon-location-pin"></i>  Palo Alto, CA</small>
-              </div>
-              <div class="list-group-item list-group-item-accent-info">
-                <div>Skype with
-                  <strong>Megan</strong>
-                </div>
-                <small class="text-muted mr-3">
-                  <i class="icon-calendar"></i>  4 - 5pm</small>
-                <small class="text-muted">
-                  <i class="icon-social-skype"></i>  On-line</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
     </div>
     <footer class="app-footer">
       <div>
-        <a href="#">Shellrean</a>
-        <span>&copy; 2019 Kuswandi.</span>
+        <a href="#">Siwalidi</a>
+        <span>&copy; 2019</span>
       </div>
       <div class="ml-auto">
         <span>Support</span>

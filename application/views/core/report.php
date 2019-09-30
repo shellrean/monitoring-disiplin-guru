@@ -9,12 +9,9 @@
         <a href="<?= base_url('report/harian') ?>" class="btn btn-success btn-sm" target="_blank">Download report hari ini</a>
       </div>
       <div class="card-footer">
-        <small>
-          <i>Informasi:</i>
-        </small> <br>
-        <small><i class="icon-info text-txt-warning"></i>
+        <span><i class="icon-info text-txt-warning"></i>
         Silahkan tekan tombol diatas untuk download
-        </small> 
+        </span> 
 
         <br>
 

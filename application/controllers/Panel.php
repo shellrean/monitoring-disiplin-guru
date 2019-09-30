@@ -7,6 +7,12 @@ class Panel extends CI_Controller
 	{
 		parent::__construct();
 		is_login();
+
+		/** @load Library **/
+		$this->load->library('Ssp');
+		$this->load->library('form_validation');
+
+
 		$this->load->model('Jadwal_model');
 		$this->load->model('Lapor_model');
 	}
@@ -84,6 +90,76 @@ class Panel extends CI_Controller
 		$res['jadwal_id'] = $jadwal_id;
 		echo json_encode($res);
 
+	}
+
+	public function data()
+	{
+		$table 			= 'lapor';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array( 
+				'db' => 'sekolah_id', 
+				'dt' => 'sekolah',
+				'formatter' => function($d) {
+					return sekolah($d);
+				}
+			),
+			array( 
+				'db' => 'jadwal_id', 
+				'dt' => 'jadwal',
+				'formatter' => function($d) {
+					$dat = $this->db->get_where('jadwal',['id' => $d])->row();
+					return '<span class="badge badge-success mx-1">'.seling($dat->seling_id,'dari').'</span><span class="badge badge-danger">'.seling($dat->seling_id,'sampai').'</span>';
+				}
+			),
+			array( 
+				'db' => 'status', 
+				'dt' => 'status',
+				'formatter' => function($d) {
+					if($d == '0') {
+						$red = '<i class="icon-close text-danger"></i>';
+					} 
+					elseif($d == '2') {
+						$red = '<i class="icon-clock text-warning"></i>';
+					}
+					else {
+						$red = '<i class="icon-check text-success"></i>';
+					}
+					return $red;
+				}
+			),
+			array( 'db' => 'keterangan','dt' => 'keterangan'),
+			array( 
+				'db' => 'jadwal_id', 
+				'dt' => 'kelas',
+				'formatter' => function($d) {
+					$dat = $this->db->get_where('jadwal',['id' => $d])->row();
+					return kelas($dat->kelas_id);
+				}
+			),
+			array( 
+				'db' => 'jadwal_id', 
+				'dt' => 'guru',
+				'formatter' => function($d) {
+					$dat = $this->db->get_where('jadwal',['id' => $d])->row();
+					return guru($dat->guru_id);
+				}
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
+		$date = date('Y-m-d', time());
+
+		$where = "tanggal = '$date' and status != '1'";
+		echo json_encode(
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns, $where)
+		);
 	}
 
 
