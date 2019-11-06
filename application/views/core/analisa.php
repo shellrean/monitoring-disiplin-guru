@@ -40,11 +40,11 @@
           <input type="hidden" id="analisa_id" >
           <input type="hidden" id="base_url" value="<?= base_url('analisa/periode/') ?>">
           <label>Dari</label>
-          <input type="date" class="form-control" name="dari" id="dari">
+          <input type="text" class="form-control datepicker" name="dari" id="dari">
         </div>
         <div class="form-group">
           <label>Sampai</label>
-          <input type="date" class="form-control" name="sampai" id="sampai">
+          <input type="text" class="form-control datepicker" name="sampai" id="sampai">
         </div>
       </div>
       <div class="modal-footer">

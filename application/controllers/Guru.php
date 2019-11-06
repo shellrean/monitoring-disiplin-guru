@@ -196,5 +196,51 @@ class Guru extends CI_Controller
 			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns, $where)
 		);
 	}	
+	/**
+	 * Get datatable 
+	 *
+	 * @method get $id_sekolah
+	 * @return view
+	 */
+
+	public function guru_sekolah($id_sekolah)
+	{
+		$data['id_sekolah'] = $id_sekolah;
+		$this->template->load('app','core/guru_list',$data);
+	}
+	/**
+	 * Get datatable 
+	 *
+	 * @method get ajax_request
+	 * @return view
+	 */
+	public function list($id_sekolah)
+	{
+		$table 			= 'guru';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array(
+				'db'=> 'nip',
+				'dt' => 'nip'
+			),
+			array(
+				'db'=> 'nama',
+				'dt' => 'nama'
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
+				
+		$where = "id_sekolah = '$id_sekolah'";
+		echo json_encode(
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns, $where)
+		);
+	}
 
 }

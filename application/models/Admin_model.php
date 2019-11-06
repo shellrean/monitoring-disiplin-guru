@@ -9,6 +9,11 @@ class Admin_model extends CI_Model
 	 */
 	public function login()
 	{
+		$browser = $this->agent->browser();
+  		$browser_version = $this->agent->version();
+	  	$os = $this->agent->platform();
+  		$ip_address = $this->input->ip_address();
+
 		$username = $this->input->post('username');
 	    $password = $this->input->post('password');
 
@@ -31,15 +36,21 @@ class Admin_model extends CI_Model
 	            'role_id'  => $user->role_id,
 	            'slug'     => $user->slug,
 	            'user_unapp_identifer' => $identifer,
+	            'flatform' => $os,
 	          ];
+
+	          log_akses($user->id, 'Login |'.$browser.' v'.$browser_version.'|'.$os.'|'.$ip_address, 1);
+
 	          $this->session->set_userdata($data);
 
 	          return $user->role_id;
 	          
 	        } else {
+	          log_akses($user->id, 'Mencoba login |'.$browser.' v'.$browser_version.'|'.$os.'|'.$ip_address,2);
 	          return false;
 	        }
 	      } else {
+	      	log_akses($user->id, 'Mencoba login |'.$browser.' v'.$browser_version.'|'.$os.'|'.$ip_address,2);
 	        return false;
 	      }
 

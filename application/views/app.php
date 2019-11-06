@@ -22,6 +22,8 @@
     <link href="<?= base_url('public') ?>/css/style.css" rel="stylesheet">
     <link href="<?= base_url('public') ?>/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <link href="<?= base_url('public') ?>/vendors/toastr/toastr.css" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('public') ?>/css/jquery-ui.css" rel="stylesheet" type="text/css">
+    
 
 
     <!-- Script Section -->
@@ -38,6 +40,7 @@
     <script src="<?= base_url('public') ?>/vendors/datatables/dataTables.bootstrap4.min.js"></script>
     
     <script src="<?= base_url('public') ?>/vendors/toastr/toastr.min.js"></script>
+    <script src="<?= base_url('public') ?>/js/jquery-ui.js"></script>
     <script src="<?= base_url('public') ?>/js/app.js"></script>
 
     <script src="<?= base_url('public') ?>/js/scripts.js"></script>
@@ -101,6 +104,9 @@
             </div>
             <a class="dropdown-item" href="<?= base_url('user/profile') ?>">
               <i class="fa fa-user"></i> Profile
+            </a>
+            <a class="dropdown-item" href="<?= base_url('user/log') ?>">
+              <i class="fa fa-lock"></i> Login log
             </a>
             <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
               <i class="fa fa-lock"></i> Logout</a>

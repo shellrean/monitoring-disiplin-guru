@@ -210,5 +210,45 @@ class User extends CI_Controller
 		echo json_encode($respon);
 	}
 
+	public function log()
+	{
+		$this->template->load('app','user/log');
+	}
 
+	public function log_data()
+	{
+		$table 			= 'log_akses';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array( 'db' => 'created', 'dt' => 'waktu'),
+			array( 'db' => 'status', 'dt' => 'status'),
+			array(
+				'db'=> 'code',
+				'dt' => 'code',
+				'formatter' => function($d) {
+					if ($d == 1) {
+						$des = "<span class='badge badge-success'>Success</span>";
+					}
+					elseif($d == 2) {
+						$des = "<span class='badge badge-danger'>Error</span>";
+					}
+					return $des;
+				}
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
+		
+		$where = "user_id = ".user()->id;
+
+		echo json_encode(
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns,$where)
+		);
+	}
 }

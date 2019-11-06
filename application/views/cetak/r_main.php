@@ -1,9 +1,9 @@
 <h4><?= $sekolah->nama_sekolah; ?></h4>
-<h5> Report <?= $date; ?> </h5> <br>
+<h5> Report <?= todate($date); ?> </h5> <br>
 <table class="table table-bordered">
 	<tr>
 		<td>No. </td>
-		<td> Waktu</td>
+		<td>Waktu</td>
 		<td>NIP</td>
 		<td>Nama guru</td>
 		<td>Status</td>
@@ -14,6 +14,9 @@
 	$no=1; foreach($qry as $q): ?>
 	<?php 
 		$data = $this->db->get_where('jadwal',['id' => $q->jadwal_id])->row();
+		if($data == null) {
+			continue;
+		}
 	?>
 	<tr>
 		<td><?= $no++; ?></td>

@@ -19,7 +19,7 @@
               <td>
                 <?php if($datas): ?>
                 <?php foreach($datas as $ds): ?>
-                  <button class="btn btn-primary btn-sm" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
+                  <button class="btn btn-primary btn-sm my-1 mx-1" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
                 <?php endforeach; ?>
                 <?php else: ?>
                   <i>Belum ada data interval yang dimasukkan</i>

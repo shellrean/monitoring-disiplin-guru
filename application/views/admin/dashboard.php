@@ -1,11 +1,19 @@
  <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12"> 
     <div class="card">
       <div class="card-header py-3">
         <i class="fa fa-align-justify"></i> Dashboard app
+
+        <!-- <a href="<?= base_url('cctv/pantau/'.user()->sekolah_id); ?>" class="btn btn-success btn-sm pull-right">Pantau CCTV</a>  -->
+        <?php if ($this->session->userdata('flatform') == 'Android'):  ?> 
+        <a target="_blank" rel="alternate" href="android-app://com.hikvision.hikconnect" class="btn btn-success btn-sm pull-right ml-1">Pantau CCTV</a>
+        <?php else: ?>
+          <a target="_blank" href="https://sgpauth.hik-connect.com/signIn?from=c17392dc2e6c405a931b&r=4952932725966710270&returnUrl=http%3A%2F%2Fwww.hik-connect.com%2Fdevices%2Fpage&host=www.hik-connect.com" class="btn btn-success btn-sm pull-right ml-1">Pantau CCTV</a>
+        <?php endif; ?>
       </div>
       <input type="hidden" name="base" id="base_url" value="<?= base_url() ?>">
       <div class="card-body">
+      	<?= $this->session->flashdata('message'); ?>
       	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  <li class="nav-item">
 		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tingkat 10</a>
@@ -20,7 +28,7 @@
 		<div class="tab-content" id="myTabContent">
 		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable">
+		  	<table class="table table-bordered table-sm" id="appTable">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -38,7 +46,7 @@
 	          			$id_sek = user()->sekolah_id;
 		          		$day 	= date('N', time());
 	          			$dat 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
-          			?>
+          			?> 
           			<td>
           			<?php foreach($dat as $t): ?>
 	          		<?php 
@@ -62,7 +70,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -74,7 +82,7 @@
 		  </div>
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable2">
+		  	<table class="table table-bordered table-sm" id="appTable2">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -117,7 +125,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -129,7 +137,7 @@
 		  </div>
 		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable3">
+		  	<table class="table table-bordered table-sm" id="appTable3">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -171,7 +179,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -264,16 +272,15 @@
 		    	success: function(res) {
 		    		let obj = $.parseJSON(res)
 		    		$('#status').val(`${obj.status}`)
-		    		$('#jadwal_id').val(`${obj.jadwal_id}`)
+		    		// $('#jadwal_id').val(`${obj.jadwal_id}`)
+		    		$('#jadwal_id').val(jadwal_id)
 		    		if(obj.lapor_id  != 0) {
 		    			$('#lapor_id').val(`${obj.lapor_id}`)
 		    		}
 		    		if(obj.keterangan != null) {
-
-		    		$('#Keterangan').val(`${obj.keterangan}`)
+		    			$('#Keterangan').val(`${obj.keterangan}`)
 		    		}
 		    	}
-		    	
 		    })
 		    hideLoading()
 		    $('#modal-check').modal('show')
@@ -300,5 +307,8 @@
 		    });
 
 	    });
+	    $('#appTable').DataTable();
+	    $('#appTable2').DataTable();
+	    $('#appTable3').DataTable();
 	})
 </script>

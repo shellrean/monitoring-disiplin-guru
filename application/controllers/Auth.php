@@ -10,6 +10,8 @@ class Auth extends CI_Controller
 
 		$this->load->model('Admin_model');
 		$this->load->library('form_validation');
+
+		$this->load->library('user_agent');
 	}
 	public function index()
 	{ 

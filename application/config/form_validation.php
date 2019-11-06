@@ -81,6 +81,17 @@ $config['guru/tambah'] = [
 	[
 		'field'	=> 'nip',
 		'label'	=> 'nip',
+		'rules'	=> 'required|is_unique[guru.nip]'
+	],
+	[
+		'field'	=> 'nama',
+		'rules'	=> 'required'
+	]
+];
+$config['guru/edit'] = [
+	[
+		'field'	=> 'nip',
+		'label'	=> 'nip',
 		'rules'	=> 'required'
 	],
 	[
@@ -129,6 +140,19 @@ $config['kelas/tambah'] = [
 	[
 		'field'	=> 'nama',
 		'label'	=> 'nama',
+		'rules'	=> 'required'
+	],
+];
+
+$config['cctv/tambah'] = [
+	[
+		'field'	=> 'kelas_id',
+		'label'	=> 'kelas',
+		'rules'	=> 'required'
+	],
+	[
+		'field'	=> 'link',
+		'label'	=> 'link',
 		'rules'	=> 'required'
 	],
 ];

@@ -5,6 +5,12 @@
  ** ------------------------------------ */
 
 $(function() {
+	$('.datepicker').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+      	changeYear: true,
+      	showAnim: 'clip',
+	});
 	$('#btn-edit-pilih').click(function(e) {
 		if($('#check').val() == 0) {
 			$(':checkbox').each(function() {

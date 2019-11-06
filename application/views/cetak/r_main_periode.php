@@ -1,9 +1,10 @@
 <h4><?= $sekolah->nama_sekolah; ?></h4>
-<h5> Periode <?= $dari; ?> - <?= $sampai ?> </h5> <br>
+<h5> Periode <?= todate($dari); ?> - <?= todate($sampai) ?> </h5> <br>
 <table class="table table-bordered">
 	<tr>
 		<td>No. </td>
-		<td> Waktu</td>
+		<td>Tanggal</td>
+		<td>Waktu</td>
 		<td>NIP</td>
 		<td>Nama guru</td>
 		<td>Status</td>
@@ -14,14 +15,18 @@
 	$no=1; foreach($qry as $q): ?>
 	<?php 
 		$data = $this->db->get_where('jadwal',['id' => $q->jadwal_id])->row();
+		if($data == null) {
+			continue;
+		}
 	?>
 	<tr>
 		<td><?= $no++; ?></td>
+		<td><?= todate($q->tanggal) ?></td>
 		<td>
 			<?= seling($data->seling_id,'dari') ?> - <?= seling($data->seling_id,'sampai'); ?>
 		</td>
 		<td>
-			<?= guru($data->guru_id,'nip'); ?>
+			<?= guru($data->guru_id,'nip'); ?> 
 		</td>
 		<td>
 			<?= guru($data->guru_id) ?>

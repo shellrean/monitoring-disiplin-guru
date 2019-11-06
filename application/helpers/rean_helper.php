@@ -139,7 +139,13 @@
   function seling($id,$prev)
   {
     $CI =& get_instance();
-    return $CI->db->get_where('seling',['id' => $id])->row()->$prev;
+    $res = $CI->db->get_where('seling',['id' => $id])->row();
+    if ($res) {
+      return $res->$prev;
+    }
+    else {
+      return '<i>Data dihapus</i>';
+    }
   }
 
   /**
@@ -170,6 +176,23 @@
     }
     else {
       $badge = '<span class="badge badge-danger">Tidak aktif</span>';
-    }
+    } 
     return $badge;
+  }
+
+  function todate($date) 
+  {
+    $time = strtotime($date);
+    $newformat = date('d/m/Y',$time);
+
+    return $newformat;
+  }
+
+   function log_akses($user_id,$status,$code) 
+  {
+    // 2 error 
+    // 1 success
+    $CI =& get_instance();
+    $CI->db->insert('log_akses',['user_id' => $user_id, 'status' => $status,'code' => $code]);
+    return true;
   }

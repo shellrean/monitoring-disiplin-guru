@@ -136,8 +136,11 @@ class Jadwal_model extends CI_Model
 		];
 		if($seling) {
 			$where['seling_id'] = $seling;
+			$this->db->order_by('kelas_id');
 		}
-		return $this->db->get_where($this->table, $where);
+		$this->db->order_by('seling_id','ASC');
+		$this->db->where($where);
+		return $this->db->get($this->table);
 	}
 
 
