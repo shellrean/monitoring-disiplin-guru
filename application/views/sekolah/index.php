@@ -9,8 +9,8 @@
       <form id="form-hapus">
       <input type="hidden" name="check" id="check" value="0">
       <div class="card-body">
-        <div class="table-responsive">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
+        <div class="table-responsive-sm">
+        <table class="table table-bordered table-striped table-sm" id="appTable" style="min-width: 520px">
           <thead>
             <tr>
               <th>#</th>
@@ -71,7 +71,7 @@
     <form id="form-edit" >
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit sekolah</h5>
+            <h5 class="modal-title">Edit sekolah</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -90,7 +90,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-          <button type="button" id="edit-simpan" class="btn btn-success">Simpan</button>
+          <button type="submit" id="edit-simpan" class="btn btn-success">Simpan</button>
         </div>
     </div>
     </form>
@@ -134,16 +134,18 @@
 
   function edit(id)
   {
-    $('#modal-proses').modal('show');
-    $.getJSON('<?= base_url('sekolah/get_by_id/') ?>'+id, function(data) {
-      if(data.data == 1) {
-        $('#edit-id').val(data.id);
-        $('#edit-nama_sekolah').val(data.nama_sekolah);
-        $('#edit-alamat_sekolah').val(data.alamat_sekolah);
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('sekolah/show/') ?>'+id, function(data) {
+        if(data.data == 1) {
+          $('#edit-id').val(data.id);
+          $('#edit-nama_sekolah').val(data.nama_sekolah);
+          $('#edit-alamat_sekolah').val(data.alamat_sekolah);
 
-        $("#modal-edit").modal("show");
-      }
-      hideLoading();
+          $("#modal-edit").modal("show");
+        }
+        hideLoading();
+      })
     })
   }
 

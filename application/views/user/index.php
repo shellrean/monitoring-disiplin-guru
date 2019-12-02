@@ -10,13 +10,14 @@
       <input type="hidden" id="base_url" value="<?= base_url('user') ?>">
       <div class="card-body">
         <div class="table-responsive-sm">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
+        <table class="table table-bordered table-striped table-sm" id="appTable" style="min-width: 520px">
           <thead>
             <tr>
               <th>#</th>
               <th>Login</th>
               <th>Nama</th>
               <th>Status</th>
+              <th>Peran</th>
               <th>Sekolah</th>
               <th>Aksi</th>
               <th></th>
@@ -99,6 +100,13 @@
               <option value="0">TIDAK AKTIF</option>
             </select>
           </div>
+          <div class="form-group">
+            <label>Peran</label>
+            <select class="form-control" name="role_id" id="role_id">
+              <option value="2">Piket</option>
+              <option value="3">Kepsek</option>
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -115,7 +123,7 @@
     <form id="form-edit" >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah user</h5>
+          <h5 class="modal-title">Ubah user</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -146,10 +154,17 @@
               <option value="0">TIDAK AKTIF</option>
             </select>
           </div>
+          <div class="form-group">
+            <label>Peran</label>
+            <select class="form-control" name="role_id" id="e-role_id">
+              <option value="2">Piket</option>
+              <option value="3">Kepsek</option>
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <button type="submit" id="edit-simpan" class="btn btn-success">Tambah</button>
+          <button type="submit" id="edit-simpan" class="btn btn-success">Ubah</button>
         </div>
       </div>
     </form>
@@ -170,19 +185,21 @@
 
   function edit(id)
   {
-    showLoading()
-    $.getJSON('<?= base_url('user/show/') ?>'+id, function(data) {
-      if(data.data == 1) {
-        $('#e-id').val(data.id)
-        $('#e-sekolah_id').val(data.sekolah_id)
-        $('#e-username').val(data.username)
-        $('#e-name').val(data.name)
-        $('#e-is_active').val(data.is_active)
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('user/show/') ?>'+id, function(data) {
+        if(data.data == 1) {
+          $('#e-id').val(data.id)
+          $('#e-sekolah_id').val(data.sekolah_id)
+          $('#e-username').val(data.username)
+          $('#e-name').val(data.name)
+          $('#e-is_active').val(data.is_active)
+          $('#e-role_id').val(data.role_id)
 
-        $('#form-pesan-edit').html('');
-        $('#modal-edit').modal('show');
-      }
-      hideLoading()
+          $('#form-pesan-edit').html('');
+          $('#modal-edit').modal('show');
+        }
+      })
     })
   }
 
@@ -201,6 +218,7 @@
         { "data"    : "username" },
         { "data"    : "name" },
         { "data"    : "status" },
+        { "data"    : "role" },
         { "data"    : "sekolah" },
         { "data"    : "aksi",
           "orderable": false,

@@ -40,23 +40,25 @@
     e.preventDefault()
     let base = $('#base_url').val()
 
-    showLoading()
-    $.ajax({
-      url: base+'/update_profile',
-      type: 'POST',
-      data: $('#form-profile').serialize(),
-      cache: false,
-      success(res) {
-        let obj = $.parseJSON(res);
-        if(obj.status == 1) {
-          hideLoading();
-          notify_success(obj.pesan)
+    Pace.restart();
+    Pace.track(function () {
+      $.ajax({
+        url: base+'/update_profile',
+        type: 'POST',
+        data: $('#form-profile').serialize(),
+        cache: false,
+        success(res) {
+          let obj = $.parseJSON(res);
+          if(obj.status == 1) {
+            hideLoading();
+            notify_success(obj.pesan)
+          }
+          else {
+            hideLoading()
+            $('#form-pesan').html(pesan_err(obj.pesan));
+          }
         }
-        else {
-          hideLoading()
-          $('#form-pesan').html(pesan_err(obj.pesan));
-        }
-      }
+      })
     })
   })
 </script>

@@ -1,11 +1,14 @@
  <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12"> 
     <div class="card">
       <div class="card-header py-3">
         <i class="fa fa-align-justify"></i> Dashboard app
+
+        <a href="<?= base_url('cctv/pantau/'.user()->sekolah_id); ?>" class="btn btn-success btn-sm pull-right">Pantau CCTV</a>
       </div>
       <input type="hidden" name="base" id="base_url" value="<?= base_url() ?>">
       <div class="card-body">
+      	<?= $this->session->flashdata('message'); ?>
       	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  <li class="nav-item">
 		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tingkat 10</a>
@@ -20,7 +23,7 @@
 		<div class="tab-content" id="myTabContent">
 		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable">
+		  	<table class="table table-bordered table-sm" id="appTable" style="min-width: 620px">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -38,7 +41,7 @@
 	          			$id_sek = user()->sekolah_id;
 		          		$day 	= date('N', time());
 	          			$dat 	= $this->Jadwal_model->get_by_day($id_sek, $day, $d->seling_id)->result();
-          			?>
+          			?> 
           			<td>
           			<?php foreach($dat as $t): ?>
 	          		<?php 
@@ -55,6 +58,12 @@
 								<i class="icon-close text-danger"></i>
 							<?php elseif($cek->status == 2): ?>
 								<i class="icon-clock text-warning"></i>
+							<?php elseif($cek->status == 3): ?>
+								<i class="icon-close text-info"></i>
+							<?php elseif($cek->status == 4): ?>
+								<i class="icon-close text-warning"></i>
+							<?php elseif($cek->status == 5): ?>
+								<i class="icon-close text-success"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -62,7 +71,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>,`<?= guru($t->guru_id) ?>`)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -74,7 +83,7 @@
 		  </div>
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable2">
+		  	<table class="table table-bordered table-sm" id="appTable2" style="min-width: 620px">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -110,6 +119,12 @@
 								<i class="icon-close text-danger"></i>
 							<?php elseif($cek->status == 2): ?>
 								<i class="icon-clock text-warning"></i>
+							<?php elseif($cek->status == 3): ?>
+								<i class="icon-close text-info"></i>
+							<?php elseif($cek->status == 4): ?>
+								<i class="icon-close text-warning"></i>
+							<?php elseif($cek->status == 5): ?>
+								<i class="icon-close text-success"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -117,7 +132,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>,`<?= guru($t->guru_id) ?>`)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -129,7 +144,7 @@
 		  </div>
 		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 		  	<div class="table-responsive-sm">
-		  	<table class="table table-responsive-sm table-bordered table-sm" id="appTable3">
+		  	<table class="table table-bordered table-sm" id="appTable3" style="min-width: 620px">
 			  	<thead>
 			  		<tr>
 			  			<td>Interval</td>
@@ -164,6 +179,12 @@
 								<i class="icon-close text-danger"></i>
 							<?php elseif($cek->status == 2): ?>
 								<i class="icon-clock text-warning"></i>
+							<?php elseif($cek->status == 3): ?>
+								<i class="icon-close text-info"></i>
+							<?php elseif($cek->status == 4): ?>
+								<i class="icon-close text-warning"></i>
+							<?php elseif($cek->status == 5): ?>
+								<i class="icon-close text-success"></i>
 							<?php else: ?>
 								<i class="icon-check text-success"></i>
 							<?php endif; ?>
@@ -171,7 +192,7 @@
 							<i class="icon-info text-warning"></i>
 						<?php endif; ?>
 					</span>
-					<a href="javacript:0" data-toggle="tooltip" onclick="show(<?= $t->id ?>)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
+					<a href="javascript:void(0)" data-toggle="tooltip" onclick="show(<?= $t->id ?>,`<?= guru($t->guru_id) ?>`)" data-jadwal="<?= $t->id ?>" class="btn btn-sm badge-light show" title="<?= guru($t->guru_id) ?>"><?= kelas($t->kelas_id) ?></a>
           		
 	          		<?php endforeach; ?>
 	          		</td>
@@ -196,6 +217,15 @@
       	<span><i class="icon-close text-danger"></i>
       		Guru tidak masuk
       	</span> <br>
+      	<span><i class="icon-close text-warning"></i>
+      		Guru sakit
+      	</span> <br>
+      	<span><i class="icon-close text-info"></i>
+      		Guru izin
+      	</span> <br>
+      	<span><i class="icon-close text-success"></i>
+      		Guru dinas luar
+      	</span> <br>
       	
       	<span><i class="icon-check text-success"></i>
       		Guru masuk
@@ -215,7 +245,7 @@
     <form action="<?= base_url('panel/store') ?>" method="post" >
     <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Detail Jadwal</h5>
+          <h5 class="modal-title" id="det">Detail Jadwal</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -229,6 +259,9 @@
            	 <select class="form-control" id="status" name="status">
            	 	<option value="1">Masuk</option>
            	 	<option value="2">Telat</option>
+           	 	<option value="3">Izin</option>
+           	 	<option value="4">Sakit</option>
+           	 	<option value="5">Dinas luar</option>
            	 	<option value="0">Tidak</option>
            	 </select>
            </div>
@@ -247,37 +280,38 @@
 </div>
 
 <script>
-	function show(id) {
+	function show(id, guru) {
 		$stsr = $('#stsr').val()
 			url = $('#base_url').val();
 		    jadwal_id = id
-		    showLoading()
 
-		    $.ajax({
-		    	
-		    	url: url+'/panel/get',
-		    	type: "POST",
-		    	data: {
-		    		jadwal_id : jadwal_id
-		    	},
-		    	cache: false,
-		    	success: function(res) {
-		    		let obj = $.parseJSON(res)
-		    		$('#status').val(`${obj.status}`)
-		    		$('#jadwal_id').val(`${obj.jadwal_id}`)
-		    		if(obj.lapor_id  != 0) {
-		    			$('#lapor_id').val(`${obj.lapor_id}`)
-		    		}
-		    		if(obj.keterangan != null) {
+		    Pace.restart();
+			Pace.track(function () {
+			    $.ajax({
+			    	
+			    	url: url+'/panel/get',
+			    	type: "POST",
+			    	data: {
+			    		jadwal_id : jadwal_id
+			    	},
+			    	cache: false,
+			    	success: function(res) {
+			    		let obj = $.parseJSON(res)
+			    		
+			    		$('#status').val(`${obj.status}`)
+			    		$('#jadwal_id').val(jadwal_id)
 
-		    		$('#Keterangan').val(`${obj.keterangan}`)
-		    		}
-		    	}
-		    	
-		    })
-		    hideLoading()
-		    $('#modal-check').modal('show')
-		
+			    		if(obj.lapor_id  != 0) {
+			    			$('#lapor_id').val(`${obj.lapor_id}`)
+			    		}
+			    		if(obj.keterangan != null) {
+			    			$('#Keterangan').val(`${obj.keterangan}`)
+			    		}
+			    		$('#det').html(guru)
+			    		$('#modal-check').modal('show')
+			    	}
+			    })
+			})
 	};
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
@@ -300,5 +334,8 @@
 		    });
 
 	    });
+	    $('#appTable').DataTable();
+	    $('#appTable2').DataTable();
+	    $('#appTable3').DataTable(); 
 	})
 </script>

@@ -1,9 +1,9 @@
 <h4><?= $sekolah->nama_sekolah; ?></h4>
-<h5> Report <?= $date; ?> </h5> <br>
+<h5> Report <?= todate($date); ?> </h5> <br>
 <table class="table table-bordered">
 	<tr>
 		<td>No. </td>
-		<td> Waktu</td>
+		<td>Waktu</td>
 		<td>NIP</td>
 		<td>Nama guru</td>
 		<td>Status</td>
@@ -14,6 +14,9 @@
 	$no=1; foreach($qry as $q): ?>
 	<?php 
 		$data = $this->db->get_where('jadwal',['id' => $q->jadwal_id])->row();
+		if($data == null) {
+			continue;
+		}
 	?>
 	<tr>
 		<td><?= $no++; ?></td>
@@ -32,6 +35,12 @@
 					Tidak masuk
 				<?php elseif($q->status == 2): ?>
 					Telambat
+				<?php elseif($q->status == 3): ?>
+					Izin
+				<?php elseif($q->status == 4): ?>
+					Sakit
+				<?php elseif($q->status == 5): ?>
+					Dinas luar
 				<?php else: ?>
 					Masuk
 				<?php endif; ?>
@@ -46,7 +55,7 @@
 	<?php endforeach; ?>
 	<?php else: ?>
 		<tr>
-			<td colspan="4"><i>Semua guru masuk hari ini</i></td>
+			<td colspan="4"><i>Tidak ada data masuk pada hari ini</i></td>
 		</tr>
 
 	<?php endif; ?>

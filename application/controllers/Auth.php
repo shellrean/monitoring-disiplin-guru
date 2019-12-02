@@ -10,6 +10,8 @@ class Auth extends CI_Controller
 
 		$this->load->model('Admin_model');
 		$this->load->library('form_validation');
+
+		$this->load->library('user_agent');
 	}
 	public function index()
 	{ 
@@ -35,8 +37,12 @@ class Auth extends CI_Controller
 		} else {
 			if($login == 1) {
 				redirect('panel');
-			} else {
+			} 
+			elseif($login == 2) {
 				redirect('dashboard');
+			}
+			else {
+				redirect('home');
 			}
 		}
 
@@ -63,10 +69,13 @@ class Auth extends CI_Controller
 
 	            redirect('panel');
 	            
-	          } else {
+	          } elseif($role == 2) {
 
 	            redirect('dashboard');
 	            
+	          }
+	          else {
+	          	redirect('home');
 	          }
 		}
 	}

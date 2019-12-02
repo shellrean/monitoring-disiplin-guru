@@ -9,7 +9,7 @@
     <meta name="author" content="Kuswandi">
     <link rel="shortcut icon" href="<?= base_url('public/img/logo-dki.png') ?>" type="image/x-icon">
  
-    <title>Siwalidi App</title>
+    <title>Siwalidi</title>
     <!-- Icons-->
     <link href="<?= base_url() ?>node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
@@ -22,6 +22,8 @@
     <link href="<?= base_url('public') ?>/css/style.css" rel="stylesheet">
     <link href="<?= base_url('public') ?>/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
     <link href="<?= base_url('public') ?>/vendors/toastr/toastr.css" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('public') ?>/css/jquery-ui.css" rel="stylesheet" type="text/css">
+    
 
 
     <!-- Script Section -->
@@ -36,8 +38,11 @@
     <script src="<?= base_url('public') ?>/vendors/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= base_url('public') ?>/vendors/datatables/dataTables.reload.js"></script>
     <script src="<?= base_url('public') ?>/vendors/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="<?= base_url('public') ?>/js/jquery.ui.widget.js"></script>
+    <script src="<?= base_url('public') ?>/js/jquery.fileupload.js"></script>
     
     <script src="<?= base_url('public') ?>/vendors/toastr/toastr.min.js"></script>
+    <script src="<?= base_url('public') ?>/js/jquery-ui.js"></script>
     <script src="<?= base_url('public') ?>/js/app.js"></script>
 
     <script src="<?= base_url('public') ?>/js/scripts.js"></script>
@@ -87,7 +92,7 @@
       </button>
       <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-          <a class="nav-link" href="<?= base_url() ?>">Dashboard</a>
+          <a class="nav-link" href="<?= base_url('user/profile') ?>"><?= user()->name ?></a>
         </li>
       </ul>
       <ul class="nav navbar-nav ml-auto">
@@ -101,6 +106,9 @@
             </div>
             <a class="dropdown-item" href="<?= base_url('user/profile') ?>">
               <i class="fa fa-user"></i> Profile
+            </a>
+            <a class="dropdown-item" href="<?= base_url('user/log') ?>">
+              <i class="fa fa-bell-o"></i> Login log
             </a>
             <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
               <i class="fa fa-lock"></i> Logout</a>
@@ -126,6 +134,23 @@
             <li class="nav-title">Utama</li>
             <?php $role = $this->session->userdata('role_id'); ?>
             <?= menus($role) ?>
+            <li class="nav-item nav-dropdown">
+              <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon icon-question"></i> Help
+              </a>
+              <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                  <a target="_blank" class="nav-link" href="<?= base_url('public/download/juknis-siwalidi.pdf') ?>">
+                    <i class="nav-icon icon-book-open"></i> Juknis
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="">
+                    <i class="nav-icon icon-camrecorder"></i> Video
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -169,10 +194,6 @@
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-
-
+    </div>
   </body>
 </html>

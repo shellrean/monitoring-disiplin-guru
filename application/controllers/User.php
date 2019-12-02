@@ -31,7 +31,7 @@ class User extends CI_Controller
 				'username'		=> $this->input->post('username'),
 				'password'		=> password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 				'name'			=> $this->input->post('name'),
-				'role_id'		=> 2,
+				'role_id'		=> $this->input->post('role_id'),
 				'is_active'		=> $this->input->post('is_active'),
 				'slug'			=> uniqid(),
 				'sekolah_id'	=> $this->input->post('sekolah_id')
@@ -68,7 +68,8 @@ class User extends CI_Controller
  					'sekolah_id'	=> $query->sekolah_id,
  					'username'	=> $query->username,
  					'name'	=> $query->name,
- 					'is_active' => $query->is_active
+ 					'is_active' => $query->is_active,
+ 					'role_id'	=> $query->role_id
  				];
  			}
  		}
@@ -91,6 +92,19 @@ class User extends CI_Controller
 				'formatter' => function($d) {
 					return status($d);
 				}
+			),
+			array(
+				'db' => 'role_id',
+				'dt' => 'role',
+				'formatter' => function($d) {
+					if($d == 2) {
+						$res = '<span class="badge badge-success">Piket</span>';
+					}
+					elseif($d == 3) {
+						$res = '<span class="badge badge-primary">Kepsek</span>';
+					}
+					return $res;
+				}	
 			),
 			array( 
 				'db' => 'sekolah_id', 
@@ -122,7 +136,7 @@ class User extends CI_Controller
 			'host'	=> $this->db->hostname
 		);
 		
-		$where = "role_id = '2'";
+		$where = "role_id != '1'";
 		echo json_encode(
 			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns,$where)
 		);
@@ -144,6 +158,7 @@ class User extends CI_Controller
 				'username'			=> $this->input->post('username'),
 				'name'				=> $this->input->post('name'),
 				'is_active'			=> $this->input->post('is_active'),
+				'role_id'			=> $this->input->post('role_id'),
 			];
 			$id = $this->input->post('id');
 			$this->User_model->update('id',$id,$data);
@@ -210,5 +225,45 @@ class User extends CI_Controller
 		echo json_encode($respon);
 	}
 
+	public function log()
+	{
+		$this->template->load('app','user/log');
+	}
 
+	public function log_data()
+	{
+		$table 			= 'log_akses';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array( 'db' => 'created', 'dt' => 'waktu'),
+			array( 'db' => 'status', 'dt' => 'status'),
+			array(
+				'db'=> 'code',
+				'dt' => 'code',
+				'formatter' => function($d) {
+					if ($d == 1) {
+						$des = "<span class='badge badge-success'>Success</span>";
+					}
+					elseif($d == 2) {
+						$des = "<span class='badge badge-danger'>Error</span>";
+					}
+					return $des;
+				}
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
+		
+		$where = "user_id = ".user()->id;
+
+		echo json_encode(
+			SSP::complex($_GET, $sql_details, $table, $primaryKey, $columns,$where)
+		);
+	}
 }

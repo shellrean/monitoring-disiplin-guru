@@ -8,7 +8,7 @@
       <input type="hidden" id="base_url" value="<?= base_url('jadwal') ?>">
       <div class="card-body">
         <div class="table-responsive-sm">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
+        <table class="table table-bordered table-striped table-sm" id="appTable">
           <thead>
             <tr>
               <th>Interval</th>
@@ -19,7 +19,7 @@
               <td>
                 <?php if($datas): ?>
                 <?php foreach($datas as $ds): ?>
-                  <button class="btn btn-primary btn-sm" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
+                  <button class="btn btn-primary btn-sm my-1 mx-1" onclick="edit('<?= $ds->id ?>')"><?= $ds->dari ?> - <?= $ds->sampai ?></button>
                 <?php endforeach; ?>
                 <?php else: ?>
                   <i>Belum ada data interval yang dimasukkan</i>
@@ -107,17 +107,18 @@
 
   function edit(id)
   {
-    showLoading();
-    $.getJSON('<?= base_url('interval/show/') ?>'+id, function(data) {
-      if(data.data == 1) {
-        $('#id').val(data.id)
-        $('#dari').val(data.dari)
-        $('#sampai').val(data.sampai)
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('interval/show/') ?>'+id, function(data) {
+        if(data.data == 1) {
+          $('#id').val(data.id)
+          $('#dari').val(data.dari)
+          $('#sampai').val(data.sampai)
 
-        $('#form-pesan').html('');
-        $('#modal-interval').modal('show')
-      }
-      hideLoading()
+          $('#form-pesan').html('');
+          $('#modal-interval').modal('show')
+        }
+      })
     })
   }
 

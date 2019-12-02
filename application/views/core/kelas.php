@@ -137,19 +137,20 @@
 
   function edit(id)
   {
-    showLoading()
-    $.getJSON('<?= base_url('kelas/show/') ?>'+id, function(data) {
-      if(data.data == 1) {
-        $('#e-id').val(data.id)
-        $('#e-tingkat').val(data.tingkat)
-        $('#e-nama').val(data.nama)
-         hideLoading()
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('kelas/show/') ?>'+id, function(data) {
+        if(data.data == 1) {
+          $('#e-id').val(data.id)
+          $('#e-tingkat').val(data.tingkat)
+          $('#e-nama').val(data.nama)
+           hideLoading()
 
-        $('#form-pesan-edit').html('');
-        $('#modal-edit').modal('show');
-      }
+          $('#form-pesan-edit').html('');
+          $('#modal-edit').modal('show');
+        }
+      })
     })
-
   }
 
   $(function() {

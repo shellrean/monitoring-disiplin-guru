@@ -176,18 +176,20 @@
 
   function edit(id)
   {
-    showLoading()
-    $.getJSON('<?= base_url('jadwal/show/') ?>'+id,function(data) {
-      if(data.data == 1) {
-        $('#edit-id').val(data.id)
-        $('#hari_id').val(data.hari_id)
-        $('#seling_id').val(data.seling_id)
-        $('#kelas_id').val(data.kelas_id)
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('jadwal/show/') ?>'+id,function(data) {
+        if(data.data == 1) {
+          $('#edit-id').val(data.id)
+          $('#hari_id').val(data.hari_id)
+          $('#seling_id').val(data.seling_id)
+          $('#kelas_id').val(data.kelas_id)
 
-        $('#form-pesan-edit').html('');
-        $('#modal-edit').modal('show')
-      }
-      hideLoading();
+          $('#form-pesan-edit').html('');
+          $('#modal-edit').modal('show')
+        }
+        hideLoading();
+      })
     })
   }
 

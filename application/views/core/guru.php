@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-header py-3">
         <i class="fa fa-align-justify"></i> Daftar guru 
+        <a href="<?= base_url('guru/upload') ?>" class="btn btn-success btn-sm pull-right ml-1">Upload guru</a>
         <button class="btn btn-success btn-sm pull-right" onclick="tambah()">Tambah guru</button>
       </div>
       <input type="hidden" id="base_url" value="<?= base_url('guru') ?>">
@@ -10,7 +11,7 @@
       <input type="hidden" name="check" id="check" value="0">
       <div class="card-body">
         <div class="table-responsive-sm">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
+        <table class="table table-bordered table-striped table-sm" id="appTable" style="min-width: 620px">
           <thead>
             <tr>
               <th>#</th>
@@ -133,17 +134,18 @@
 
   function edit(id)
   {
-    showLoading();
-    $.getJSON('<?= base_url('guru/show/') ?>'+id, function(data) {
-      if(data.data == 1) {
-        $('#e-id').val(data.id)
-        $('#e-nip').val(data.nip)
-        $('#e-nama').val(data.nama)
+    Pace.restart();
+    Pace.track(function () {
+      $.getJSON('<?= base_url('guru/show/') ?>'+id, function(data) {
+        if(data.data == 1) {
+          $('#e-id').val(data.id)
+          $('#e-nip').val(data.nip)
+          $('#e-nama').val(data.nama)
 
-        $('#form-pesan-edit').html('');
-        $('#modal-edit').modal('show')
-      }
-      hideLoading()
+          $('#form-pesan-edit').html('');
+          $('#modal-edit').modal('show')
+        }
+      })
     })
   }
 

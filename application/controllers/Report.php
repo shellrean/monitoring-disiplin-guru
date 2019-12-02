@@ -105,7 +105,7 @@ class Report extends CI_Controller
 		$wm = base_url() . 'public/img/logo-dki.png';
 		$m_pdf->SetWatermarkImage($wm);
 		$m_pdf->showWatermarkImage = true;
-		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.$date.'<i></b>');
+		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.todate($date).'<i></b>');
 
 		$m_pdf->AddPage('L');
 		$r_header = $this->load->view('cetak/r_header',$data,true);

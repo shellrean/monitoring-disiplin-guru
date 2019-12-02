@@ -11,6 +11,7 @@ class Sekolah extends CI_Controller
 		is_login();
 		$this->load->model('Sekolah_model');
 		$this->load->library('form_validation');
+		$this->load->library('Ssp');
 	}
 
 	public function index()
@@ -33,6 +34,25 @@ class Sekolah extends CI_Controller
 			$this->Sekolah_model->save($data);
 			$status['status'] = 1;
 			$status['pesan'] = 'Data sekolah berhasil disimpan';
+		} else {
+			$status['status'] = 0;
+            $status['pesan'] = validation_errors();
+		}
+       
+        
+        echo json_encode($status);
+	}
+	public function update()
+	{
+		if($this->form_validation->run('sekolah/tambah')) {
+			$data = [
+				'nama_sekolah'		=> $this->input->post('nama_sekolah'),
+				'alamat_sekolah'	=> $this->input->post('alamat_sekolah')
+			];
+			$id = $this->input->post('id');
+			$this->Sekolah_model->update('id',$id,$data);
+			$status['status'] = 1;
+			$status['pesan'] = 'Data sekolah berhasil diubah';
 		} else {
 			$status['status'] = 0;
             $status['pesan'] = validation_errors();
@@ -164,6 +184,40 @@ class Sekolah extends CI_Controller
 		}
 
 		return $rows;
+	}
+
+
+	public function cctv()
+	{
+		$this->template->load('app','core/cctv_sekolah');
+	}
+
+	public function cctv_data() 
+	{
+		$table 			= 'sekolah';
+		$primaryKey		= 'id';
+		$columns		= array(
+			array( 'db' => 'id', 'dt' => 'id'),
+			array( 'db' => 'nama_sekolah', 'dt' => 'sekolah'),
+			array(
+				'db'=> 'id',
+				'dt' => 'aksi',
+				'formatter' => function($d) {
+					return '<a href="'.base_url('cctv/pantau/').$d.'"" class="btn btn-sm btn-success">Pantau</a>';
+				}
+			)
+		);
+
+		$sql_details = array(
+			'user'	=> $this->db->username,
+			'pass'	=> $this->db->password,
+			'db'	=> $this->db->database,
+			'host'	=> $this->db->hostname
+		);
+	
+		echo json_encode(
+			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns)
+		);
 	}
 
 }

@@ -12,6 +12,7 @@ class Analisa extends CI_Controller
 
 		$this->load->library('Ssp');
 	}
+	
 	public function index()
 	{
 		$this->template->load('app','core/analisa');
@@ -51,7 +52,7 @@ class Analisa extends CI_Controller
 		$m_pdf = new \Mpdf\Mpdf();
 		$date = date('Y-m-d', time());
 
-		$data['qry'] = $this->db->get_where('lapor',['tanggal' => $date,'sekolah_id' => $id,'status !=' => 1])->result();
+		$data['qry'] = $this->db->get_where('lapor',['tanggal' => $date,'sekolah_id' => $id])->result();
 
 		// echo json_encode($data['qry']);
 		$data['date'] = $date;
@@ -61,7 +62,7 @@ class Analisa extends CI_Controller
 		$wm = base_url() . 'public/img/logo-dki.png';
 		$m_pdf->SetWatermarkImage($wm);
 		$m_pdf->showWatermarkImage = true;
-		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.$date.'<i></b>');
+		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.todate($date).'<i></b>');
 		$m_pdf->AddPage('L');
 		$r_header = $this->load->view('cetak/r_header',$data,true);
 		$m_pdf->WriteHTML($r_header);
@@ -84,7 +85,6 @@ class Analisa extends CI_Controller
 		$this->db->where('tanggal >=', $dari);
 		$this->db->where('tanggal <=', $sampai);
 		$this->db->where('sekolah_id',$id);
-		$this->db->where('status != ',1);
 
 		$data['qry'] = $this->db->get('lapor')->result();
 
@@ -95,7 +95,7 @@ class Analisa extends CI_Controller
 		$wm = base_url() . 'public/img/logo-dki.png';
 		$m_pdf->SetWatermarkImage($wm);
 		$m_pdf->showWatermarkImage = true;
-		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.$date.'<i></b>');
+		$m_pdf->SetHTMLFooter('<b style="font-size:8px;"><i>Report '.todate($date).'<i></b>');
 		$m_pdf->AddPage('L');
 		$r_header = $this->load->view('cetak/r_header',$data,true);
 		$m_pdf->WriteHTML($r_header);

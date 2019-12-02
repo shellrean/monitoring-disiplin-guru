@@ -5,6 +5,12 @@
  ** ------------------------------------ */
 
 $(function() {
+	$('.datepicker').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+      	changeYear: true,
+      	showAnim: 'clip',
+	});
 	$('#btn-edit-pilih').click(function(e) {
 		if($('#check').val() == 0) {
 			$(':checkbox').each(function() {
@@ -31,26 +37,26 @@ $(function() {
 		let base = $('#base_url').val();
 
 		e.preventDefault();
-		showLoading()
-		$.ajax({
-			url: base+'/destroy',
-			type: 'POST',
-			data: $('#form-hapus').serialize(),
-			cache: false,
-			success(res) {
-				let obj = $.parseJSON(res);
-				if(obj.status == 1) {
-					refresh_table();
-					hideLoading();
-					$('#modal-hapus').modal('hide');
-					notify_success(obj.pesan);
-					$('#check').val(0);
-				} else {
-					hideLoading();
-					$('#modal-hapus').modal('hide');
-					notify_error(obj.pesan);
+		Pace.restart();
+    	Pace.track(function () {
+			$.ajax({
+				url: base+'/destroy',
+				type: 'POST',
+				data: $('#form-hapus').serialize(),
+				cache: false,
+				success(res) {
+					let obj = $.parseJSON(res);
+					if(obj.status == 1) {
+						refresh_table();
+						$('#modal-hapus').modal('hide');
+						notify_success(obj.pesan);
+						$('#check').val(0);
+					} else {
+						$('#modal-hapus').modal('hide');
+						notify_error(obj.pesan);
+					}
 				}
-			}
+			})
 		})
 	})
 
@@ -58,25 +64,25 @@ $(function() {
 		e.preventDefault()
 		let base = $('#base_url').val()
 
-		showLoading()
-		$.ajax({
-			url: base+'/store',
-			type: 'POST',
-			data: $('#form-tambah').serialize(),
-			cache: false,
-			success(res) {
-				let obj = $.parseJSON(res);
-				if(obj.status == 1) {
-					refresh_table()
-					hideLoading();
-					$('#modal-tambah').modal('hide')
-					notify_success(obj.pesan)
+		Pace.restart();
+    	Pace.track(function () {
+			$.ajax({
+				url: base+'/store',
+				type: 'POST',
+				data: $('#form-tambah').serialize(),
+				cache: false,
+				success(res) {
+					let obj = $.parseJSON(res);
+					if(obj.status == 1) {
+						refresh_table()
+						$('#modal-tambah').modal('hide')
+						notify_success(obj.pesan)
+					}
+					else {
+						$('#form-pesan').html(pesan_err(obj.pesan));
+					}
 				}
-				else {
-					hideLoading()
-					$('#form-pesan').html(pesan_err(obj.pesan));
-				}
-			}
+			})
 		})
 	})
 
@@ -84,27 +90,58 @@ $(function() {
       e.preventDefault();
       let base = $('#base_url').val()
 
-      showLoading()
-      $.ajax({
-        url: base+'/update',
-        type: "POST",
-        data:$('#form-edit').serialize(),
-        cache: false,
-        success(res) {
-          let obj = $.parseJSON(res);
-          if(obj.status  == 1) {
-            refresh_table();
-            hideLoading();
-            $('#modal-edit').modal('hide');
-            notify_success(obj.pesan)
-          }
-          else {
-            hideLoading();
-            $('#form-pesan-edit').html(pesan_err(obj.pesan))
-          }
-        }
-      })
+      Pace.restart();
+      Pace.track(function () {
+	      $.ajax({
+	        url: base+'/update',
+	        type: "POST",
+	        data:$('#form-edit').serialize(),
+	        cache: false,
+	        success(res) {
+	          let obj = $.parseJSON(res);
+	          if(obj.status  == 1) {
+	            refresh_table();
+	            $('#modal-edit').modal('hide');
+	            notify_success(obj.pesan)
+	          }
+	          else {
+	            $('#form-pesan-edit').html(pesan_err(obj.pesan))
+	          }
+	        }
+	      })
+	  })
   	})
 
-
-})
+  	$('#fileupload').fileupload({
+  		url: $('#url').val(),
+  		dataType: 'json',
+		})
+		.on('fileuploadprogress', function (e, data) {
+	  	var progress = parseInt(data.loaded / data.total * 100, 10);
+	  	$('#progress-bar').css('width',progress + '%');
+		})
+		.on('fileuploadsubmit', function (e, data) {
+			$('#gagal').hide();
+			var mapel = $('#category_id_upload').val();
+			data.formData = {data: mapel};
+			if(data.formData.mapel == ''){
+				return false;
+			}
+			else{
+				$('#progress').show();
+			}
+		})
+		.on('fileuploaddone', function (e, data) {
+			window.setTimeout(function() { 
+				$('#progress-bar').css('width','0%');
+			}, 1000);
+			if(data.result.type == 'error') {
+				notify_error(data.result.text)
+			}
+			else {
+				notify_success(data.result.text)
+			}
+		})
+		.prop('disabled', !$.support.fileInput)
+		.parent().addClass($.support.fileInput ? undefined : 'disabled');
+	})

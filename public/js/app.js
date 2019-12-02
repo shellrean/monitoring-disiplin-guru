@@ -25,9 +25,7 @@ function refresh_table() {
 }
 
 function hideLoading() {
-	$('#modal-proses').on('shown.bs.modal', function(e) {
-		$('#modal-proses').modal('hide')
-	})
+	$('#modal-proses').modal('hide')
 }
 
 function showLoading() {

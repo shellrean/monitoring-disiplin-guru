@@ -2,11 +2,11 @@
   <div class="col-lg-12"> 
     <div class="card">
       <div class="card-header py-3">
-        <i class="fa fa-align-justify"></i> Analisa harian
+        <i class="fa fa-align-justify"></i> Analisa
       </div>
       <div class="card-body">
         <div class="table-responsive-sm">
-        <table class="table table-responsive-sm table-bordered table-striped table-sm" id="appTable">
+        <table class="table table-bordered table-striped table-sm" id="appTable"  style="min-width: 520px">
           <thead>
             <tr>
               <th>#</th>
@@ -40,11 +40,11 @@
           <input type="hidden" id="analisa_id" >
           <input type="hidden" id="base_url" value="<?= base_url('analisa/periode/') ?>">
           <label>Dari</label>
-          <input type="date" class="form-control" name="dari" id="dari">
+          <input type="text" class="form-control datepicker" name="dari" id="dari">
         </div>
         <div class="form-group">
           <label>Sampai</label>
-          <input type="date" class="form-control" name="sampai" id="sampai">
+          <input type="text" class="form-control datepicker" name="sampai" id="sampai">
         </div>
       </div>
       <div class="modal-footer">
@@ -69,7 +69,7 @@
       let id = $('#analisa_id').val()
 
       if(dari == '' || sampai == '') {
-        alert('Silahkan pilih periode tanggal')
+        notify_error('Silahkan pilih periode tanggal')
       }
       else {
         window.open(url+id+'/'+dari+'/'+sampai)
